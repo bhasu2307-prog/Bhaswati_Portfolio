@@ -19,209 +19,196 @@ export interface ReleaseItem {
   tagColor?: string;
 }
 
-export interface TourDate {
-  date: string;
-  day: string;
-  venue: string;
-  city: string;
-  status: 'available' | 'soldout';
-  ticketUrl?: string;
-}
-
-export interface PressQuote {
-  quote: string;
-  outlet: string;
-  score: string;
-}
-
 export interface ContactCard {
   label: string;
   name: string;
   email: string;
 }
 
-export const epkData = {
-  artist: {
-    name: "Bhaswati Sengupta",
+export interface SocialLink {
+  platform: string;
+  url: string;
+  icon: string;
+}
+
+export interface StreamingPlatform {
+  platform: string;
+  url: string;
+  icon: string;
+}
+
+export interface SiteContent {
+  hero: {
+    firstName: string;
+    lastName: string;
+    subtitle: string;
+    description: string;
+    ctaLabel: string;
+    ctaUrl: string;
+    backgroundImage: string;
+  };
+  about: {
+    heading: string;
+    highlightWord: string;
+    paragraphs: string[];
+    image1: string;
+    image1Label: string;
+    image2: string;
+    image2Label: string;
+    facts: { label: string; value: string }[];
+  };
+  music: {
+    heading: string;
+    highlightWord: string;
+    releases: ReleaseItem[];
+  };
+  photos: {
+    heading: string;
+    highlightWord: string;
+    photos: PhotoItem[];
+  };
+  video: {
+    title: string;
+    subtitle: string;
+    url: string;
+    thumbnail: string;
+  };
+  contact: {
+    heading: string;
+    highlightWord: string;
+    blurb: string;
+    bookingEmail: string;
+    contacts: ContactCard[];
+  };
+  footer: {
+    artistName: string;
+    subtitle: string;
+    socialHandle: string;
+    socials: SocialLink[];
+    streaming: StreamingPlatform[];
+  };
+}
+
+export const defaultContent: SiteContent = {
+  hero: {
     firstName: "Bhaswati",
     lastName: "Sengupta",
-    subtitle: "Bollywood Playback Singer / Live Performer",
-    heroImage: "https://images.pexels.com/photos/8547680/pexels-photo-8547680.jpeg?auto=compress&cs=tinysrgb&h=1200&w=800",
-    bioImage: "https://images.pexels.com/photos/32491407/pexels-photo-32491407.jpeg?auto=compress&cs=tinysrgb&h=900&w=600",
-    socialHandle: "@itsmebsg",
-    bookingEmail: "bhaswatis.music@gmail.com",
+    subtitle: "Singer / Live Performer / Playback Artist",
+    description: "A Bollywood voice raised on riyaaz — bringing the songs that raised us to your stage, live, wherever home is now.",
+    ctaLabel: "Book Bhaswati",
+    ctaUrl: "mailto:bhaswatis.music@gmail.com",
+    backgroundImage: "https://images.pexels.com/photos/8547680/pexels-photo-8547680.jpeg?auto=compress&cs=tinysrgb&h=1200&w=800",
   },
-
-  heroCta: {
-    label: "Watch Showreel",
-    url: "https://youtube.com/shorts/_RQKF-RxzMk",
-  },
-
-  heroStats: [
-    { value: "50+", label: "Live Shows" },
-    { value: "10M+", label: "Streams" },
-    { value: "15+", label: "Playback Credits" },
-    { value: "4", label: "Languages" },
-  ],
-
-  tickerItems: [
-    "Vocals for Sachin-Jigar",
-    "Collaborator with Benny John",
-    "Trained by AR Rahman Alumna",
-    "Featured with Adarsh Shinde",
-    "10M+ Streams Worldwide",
-    "50+ Live Performances",
-  ],
-
-  biography: {
+  about: {
+    heading: "The Artist",
+    highlightWord: "Artist",
     paragraphs: [
-      "Bhaswati Sengupta is a Bollywood playback singer and electrifying live performer, praised for her powerful vocals and magnetic stage presence. She has worked with top music directors like Sachin-Jigar, Amjad-Nadeem-Amir, and Benny John, delivering vocals that blend raw energy with deep emotion.",
-      "Blending classical foundations with contemporary Bollywood sensibility, Bhaswati moves effortlessly between folk, semi-classical, and modern pop. Her voice carries a rare versatility — equally at home in a studio playback booth and in front of a 10,000-strong crowd.",
-      "Trained under Sharanya Natrajan (AR Rahman alumna) and mentored by Koyel Tripathi in classical foundations, she represents a new generation of Indian vocalists who honor tradition while pushing the boundaries of commercial Bollywood music.",
+      "Before I understood the words, I knew the melodies. Ours was a house where the harmonium was never really put away — mornings meant riyaaz, evenings meant old film songs drifting from the radio. Music was not a lesson. It was the language we spoke.",
+      "The moment I fell in love with the stage was not applause — it was silence. A room full of people going quiet, leaning in, feeling a lyric land the same instant I did. That hush is what I have chased ever since.",
+      "Trained under Sharanya Natrajan (AR Rahman alumna) and mentored by Koyel Tripathi in classical foundations, I now bring that voice to stages across the US, Canada and India — to weddings, galas and campus nights full of people far from where they grew up.",
     ],
+    image1: "https://images.pexels.com/photos/32491407/pexels-photo-32491407.jpeg?auto=compress&cs=tinysrgb&h=900&w=600",
+    image1Label: "Live / Mumbai",
+    image2: "https://images.pexels.com/photos/9418230/pexels-photo-9418230.jpeg?auto=compress&cs=tinysrgb&h=900&w=600",
+    image2Label: "Studio / Delhi",
     facts: [
-      { label: "Based", value: "Mumbai, India" },
+      { label: "Based", value: "Mumbai / Touring US & Canada" },
       { label: "Genres", value: "Bollywood / Folk / Pop" },
       { label: "Languages", value: "Hindi / Bengali / English / Tamil" },
       { label: "Training", value: "Sharanya Natrajan (AR Rahman alumna)" },
       { label: "Mentor", value: "Koyel Tripathi" },
       { label: "Active Since", value: "2019" },
     ],
-    highlights: [
-      "Versatile vocals across Bollywood, folk, and contemporary genres",
-      "Featured alongside acclaimed singer Adarsh Shinde",
-      "Trained under Sharanya Natrajan (AR Rahman alumna)",
-      "Mentored by Koyel Tripathi in classical foundations",
+  },
+  music: {
+    heading: "Music & Releases",
+    highlightWord: "Releases",
+    releases: [
+      {
+        title: "Jhoom Jhoom Baba",
+        type: "SINGLE",
+        year: "2024",
+        cover: "https://images.pexels.com/photos/10168224/pexels-photo-10168224.jpeg?auto=compress&cs=tinysrgb&h=600&w=600",
+        streams: "2.1M",
+        links: [
+          { label: "YouTube", url: "https://youtu.be/wL_gLi4KLtg" },
+          { label: "Spotify", url: "https://spotify.com" },
+        ],
+        tagColor: "#c8ff00",
+      },
+      {
+        title: "Chaleya (Cover)",
+        type: "SINGLE",
+        year: "2024",
+        cover: "https://images.pexels.com/photos/9418230/pexels-photo-9418230.jpeg?auto=compress&cs=tinysrgb&h=600&w=600",
+        streams: "1.8M",
+        links: [
+          { label: "YouTube", url: "https://youtu.be/0miwmaEUb8k" },
+          { label: "Spotify", url: "https://spotify.com" },
+        ],
+        tagColor: "#ff3cac",
+      },
+      {
+        title: "Mashup Live",
+        type: "EP",
+        year: "2023",
+        cover: "https://images.pexels.com/photos/5351021/pexels-photo-5351021.png?auto=compress&cs=tinysrgb&h=600&w=600",
+        streams: "3.5M",
+        links: [
+          { label: "YouTube", url: "https://youtu.be/77AX44whQyY" },
+          { label: "Spotify", url: "https://spotify.com" },
+        ],
+        tagColor: "#c8ff00",
+      },
     ],
   },
-
-  releases: [
-    {
-      title: "Jhoom Jhoom Baba",
-      type: "SINGLE" as const,
-      year: "2024",
-      cover: "https://images.pexels.com/photos/10168224/pexels-photo-10168224.jpeg?auto=compress&cs=tinysrgb&h=600&w=600",
-      streams: "2.1M",
-      links: [
-        { label: "YouTube", url: "https://youtu.be/wL_gLi4KLtg" },
-        { label: "Spotify", url: "https://spotify.com" },
-      ],
-      tagColor: "#c8ff00",
-    },
-    {
-      title: "Chaleya (Cover)",
-      type: "SINGLE" as const,
-      year: "2024",
-      cover: "https://images.pexels.com/photos/9418230/pexels-photo-9418230.jpeg?auto=compress&cs=tinysrgb&h=600&w=600",
-      streams: "1.8M",
-      links: [
-        { label: "YouTube", url: "https://youtu.be/0miwmaEUb8k" },
-        { label: "Spotify", url: "https://spotify.com" },
-      ],
-      tagColor: "#ff3cac",
-    },
-    {
-      title: "Mashup Live",
-      type: "EP" as const,
-      year: "2023",
-      cover: "https://images.pexels.com/photos/5351021/pexels-photo-5351021.png?auto=compress&cs=tinysrgb&h=600&w=600",
-      streams: "3.5M",
-      links: [
-        { label: "YouTube", url: "https://youtu.be/77AX44whQyY" },
-        { label: "Spotify", url: "https://spotify.com" },
-      ],
-      tagColor: "#c8ff00",
-    },
-  ] as ReleaseItem[],
-
-  photos: [
-    { src: "https://images.pexels.com/photos/30397932/pexels-photo-30397932.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Stage / Mumbai" },
-    { src: "https://images.pexels.com/photos/26588618/pexels-photo-26588618.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Studio / Delhi" },
-    { src: "https://images.pexels.com/photos/10168224/pexels-photo-10168224.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Live / Bangalore" },
-    { src: "https://images.pexels.com/photos/7699976/pexels-photo-7699976.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Portrait / Kolkata" },
-    { src: "https://images.pexels.com/photos/23911182/pexels-photo-23911182.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Session / Mumbai" },
-    { src: "https://images.pexels.com/photos/16929699/pexels-photo-16929699.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Feature / Jaipur" },
-  ] as PhotoItem[],
-
-  videoStrip: {
+  photos: {
+    heading: "Press Photos",
+    highlightWord: "Photos",
+    photos: [
+      { src: "https://images.pexels.com/photos/30397932/pexels-photo-30397932.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Stage / Mumbai" },
+      { src: "https://images.pexels.com/photos/26588618/pexels-photo-26588618.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Studio / Delhi" },
+      { src: "https://images.pexels.com/photos/10168224/pexels-photo-10168224.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Live / Bangalore" },
+      { src: "https://images.pexels.com/photos/7699976/pexels-photo-7699976.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Portrait / Kolkata" },
+      { src: "https://images.pexels.com/photos/23911182/pexels-photo-23911182.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Session / Mumbai" },
+      { src: "https://images.pexels.com/photos/16929699/pexels-photo-16929699.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Feature / Jaipur" },
+    ],
+  },
+  video: {
     title: "Jhoom Jhoom Baba — Live",
     subtitle: "Highlight Reel / 2024",
     url: "https://youtu.be/wL_gLi4KLtg",
     thumbnail: "https://images.pexels.com/photos/30497160/pexels-photo-30497160.jpeg?auto=compress&cs=tinysrgb&h=800&w=1600",
   },
-
-  tour: [
-    { date: "OCT 12", day: "Sat", venue: "Nita Mukesh Ambani Cultural Centre", city: "Mumbai", status: "available" as const, ticketUrl: "mailto:bhaswatis.music@gmail.com" },
-    { date: "OCT 26", day: "Sat", venue: "Phoenix Marketcity Open Air", city: "Pune", status: "soldout" as const },
-    { date: "NOV 02", day: "Sat", venue: "Phoenix Marketcity", city: "Bangalore", status: "available" as const, ticketUrl: "mailto:bhaswatis.music@gmail.com" },
-    { date: "NOV 09", day: "Sat", venue: "Gachibowli Stadium", city: "Hyderabad", status: "available" as const, ticketUrl: "mailto:bhaswatis.music@gmail.com" },
-    { date: "NOV 23", day: "Sat", venue: "Salt Lake Stadium", city: "Kolkata", status: "soldout" as const },
-    { date: "DEC 07", day: "Sat", venue: "JLN Stadium", city: "Delhi", status: "available" as const, ticketUrl: "mailto:bhaswatis.music@gmail.com" },
-  ] as TourDate[],
-
-  press: [
-    {
-      quote: "Bhaswati's voice is a revelation — she doesn't just sing a song, she owns it. Her stage presence is nothing short of electrifying.",
-      outlet: "Bollywood Hungama",
-      score: "4.5/5",
-    },
-    {
-      quote: "A rare talent who bridges the gap between classical training and commercial Bollywood. Her playback work is already turning heads.",
-      outlet: "Rolling Stone India",
-      score: "4/5",
-    },
-    {
-      quote: "One of the most promising voices in the new wave of Bollywood playback. Keep an eye on her — the trajectory is steep.",
-      outlet: "Music Plus",
-      score: "4.5/5",
-    },
-  ] as PressQuote[],
-
-  pressLogos: ["Bollywood Hungama", "Rolling Stone India", "Music Plus", "Filmfare", "Mirchi Top 20", "Gaana Spotlight"],
-
-  contacts: [
-    { label: "Management", name: "Rohan Mehta", email: "rohan@bhaswatimusic.com" },
-    { label: "Booking — India", name: "Priya Sharma", email: "priya@bhaswatimusic.com" },
-    { label: "Booking — International", name: "James Carter", email: "james@bhaswatimusic.com" },
-    { label: "Press & PR", name: "Anita Desai", email: "anita@bhaswatimusic.com" },
-    { label: "Sync Licensing", name: "Vikram Singh", email: "vikram@bhaswatimusic.com" },
-    { label: "General Inquiries", name: "Bhaswati Sengupta", email: "bhaswatis.music@gmail.com" },
-  ] as ContactCard[],
-
-  socials: [
-    { platform: "Instagram", url: "https://instagram.com/itsmebsg", icon: "instagram" },
-    { platform: "Facebook", url: "https://facebook.com/itsmebsg", icon: "facebook" },
-    { platform: "YouTube", url: "https://youtube.com/@itsmebsg", icon: "youtube" },
-  ],
-
-  streaming: [
-    { platform: "Spotify", url: "https://spotify.com", icon: "spotify" },
-    { platform: "Apple Music", url: "https://music.apple.com", icon: "apple" },
-    { platform: "JioSaavn", url: "https://jiosaavn.com", icon: "jiosaavn" },
-    { platform: "Wynk", url: "https://wynkmusic.com", icon: "wynk" },
-  ],
-
-  mediaCategories: [
-    {
-      title: "Live Energy",
-      videos: [
-        { title: "Jhoom Jhoom Baba", url: "https://youtu.be/wL_gLi4KLtg", id: "wL_gLi4KLtg" },
-        { title: "Mashup", url: "https://youtu.be/77AX44whQyY", id: "77AX44whQyY" },
-        { title: "Chaleya", url: "https://youtu.be/0miwmaEUb8k", id: "0miwmaEUb8k" },
-      ] as VideoItem[],
-    },
-    {
-      title: "Playback & Bollywood",
-      videos: [
-        { title: "Release 1", url: "https://youtu.be/tB-SVGFH7Is", id: "tB-SVGFH7Is" },
-        { title: "Release 2", url: "https://youtu.be/oEBC1Or8teQ", id: "oEBC1Or8teQ" },
-      ] as VideoItem[],
-    },
-    {
-      title: "Originals",
-      videos: [
-        { title: "Original Track", url: "https://youtu.be/iV5rNXgQySg", id: "iV5rNXgQySg" },
-      ] as VideoItem[],
-    },
-  ],
+  contact: {
+    heading: "Get In Touch",
+    highlightWord: "Touch",
+    blurb: "Tell me about your evening — the date, the city, the people who will be in the room. You'll hear back from me personally, not an autoresponder.",
+    bookingEmail: "bhaswatis.music@gmail.com",
+    contacts: [
+      { label: "Management", name: "Rohan Mehta", email: "rohan@bhaswatimusic.com" },
+      { label: "Booking — India", name: "Priya Sharma", email: "priya@bhaswatimusic.com" },
+      { label: "Booking — International", name: "James Carter", email: "james@bhaswatimusic.com" },
+      { label: "Press & PR", name: "Anita Desai", email: "anita@bhaswatimusic.com" },
+      { label: "Sync Licensing", name: "Vikram Singh", email: "vikram@bhaswatimusic.com" },
+      { label: "General Inquiries", name: "Bhaswati Sengupta", email: "bhaswatis.music@gmail.com" },
+    ],
+  },
+  footer: {
+    artistName: "Bhaswati Sengupta",
+    subtitle: "Singer / Live Performer / Playback Artist",
+    socialHandle: "@itsmebsg",
+    socials: [
+      { platform: "Instagram", url: "https://instagram.com/itsmebsg", icon: "instagram" },
+      { platform: "Facebook", url: "https://facebook.com/itsmebsg", icon: "facebook" },
+      { platform: "YouTube", url: "https://youtube.com/@itsmebsg", icon: "youtube" },
+      { platform: "LinkedIn", url: "https://linkedin.com/in/itsmebsg", icon: "linkedin" },
+    ],
+    streaming: [
+      { platform: "Spotify", url: "https://spotify.com", icon: "spotify" },
+      { platform: "Apple Music", url: "https://music.apple.com", icon: "apple" },
+      { platform: "JioSaavn", url: "https://jiosaavn.com", icon: "jiosaavn" },
+      { platform: "Wynk", url: "https://wynkmusic.com", icon: "wynk" },
+    ],
+  },
 };

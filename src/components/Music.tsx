@@ -1,5 +1,4 @@
-import { epkData } from "@/data/epkData";
-import type { ReleaseItem } from "@/data/epkData";
+import type { SiteContent, ReleaseItem } from "@/data/epkData";
 
 function ReleaseCard({ release }: { release: ReleaseItem }) {
   return (
@@ -14,11 +13,8 @@ function ReleaseCard({ release }: { release: ReleaseItem }) {
         />
         {/* Type tag */}
         <div
-          className="absolute top-0 left-0 font-display font-bold uppercase text-[10px] tracking-wider px-3 py-1.5"
-          style={{
-            color: release.tagColor === "#ff3cac" ? "#080808" : "#080808",
-            background: release.tagColor || "#c8ff00",
-          }}
+          className="absolute top-0 left-0 font-display font-bold uppercase text-[10px] tracking-wider px-3 py-1.5 text-primary-fg"
+          style={{ background: release.tagColor || "#c8ff00" }}
         >
           {release.type}
         </div>
@@ -26,16 +22,12 @@ function ReleaseCard({ release }: { release: ReleaseItem }) {
 
       {/* Info */}
       <div className="p-4 border-t border-border">
-        <div className="flex items-start justify-between mb-2">
-          <div>
-            <h3 className="font-display font-bold text-white text-lg uppercase leading-tight">
-              {release.title}
-            </h3>
-            <p className="text-muted text-[10px] uppercase tracking-wider mt-1">
-              {release.year} · {release.streams} streams
-            </p>
-          </div>
-        </div>
+        <h3 className="font-display font-bold text-white text-lg uppercase leading-tight">
+          {release.title}
+        </h3>
+        <p className="text-muted text-[10px] uppercase tracking-wider mt-1">
+          {release.year} · {release.streams} streams
+        </p>
 
         {/* Streaming links */}
         <div className="flex gap-2 mt-3">
@@ -56,8 +48,14 @@ function ReleaseCard({ release }: { release: ReleaseItem }) {
   );
 }
 
-export default function Music() {
-  const { releases } = epkData;
+export default function Music({ content }: { content: SiteContent }) {
+  const { music } = content;
+
+  // Split heading to highlight one word
+  const words = music.heading.split(" ");
+  const highlightIdx = words.findIndex((w) =>
+    w.toLowerCase().includes(music.highlightWord.toLowerCase())
+  );
 
   return (
     <section id="music" className="relative z-10 bg-[#0d0d0d] border-b border-border">
@@ -74,12 +72,16 @@ export default function Music() {
           className="font-display font-bold uppercase leading-[0.85] tracking-tight text-white mb-12"
           style={{ fontSize: "clamp(2.5rem, 7vw, 6rem)" }}
         >
-          Music & <span className="text-primary">Releases</span>
+          {words.map((word, i) => (
+            <span key={i} className={i === highlightIdx ? "text-primary" : ""}>
+              {word}{i < words.length - 1 ? " " : ""}
+            </span>
+          ))}
         </h2>
 
         {/* Release grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-px bg-border">
-          {releases.map((release, i) => (
+          {music.releases.map((release, i) => (
             <div key={i} className="bg-[#0d0d0d]">
               <ReleaseCard release={release} />
             </div>

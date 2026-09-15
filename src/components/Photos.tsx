@@ -1,18 +1,18 @@
 import { useState, useEffect, useCallback } from "react";
 import { X } from "lucide-react";
-import { epkData } from "@/data/epkData";
+import type { SiteContent } from "@/data/epkData";
 
-export default function Photos() {
-  const { photos } = epkData;
+export default function Photos({ content }: { content: SiteContent }) {
+  const { photos } = content;
   const [lightbox, setLightbox] = useState<number | null>(null);
 
   const closeLightbox = useCallback(() => setLightbox(null), []);
   const nextPhoto = useCallback(() => {
-    setLightbox((prev) => (prev === null ? null : (prev + 1) % photos.length));
-  }, [photos.length]);
+    setLightbox((prev) => (prev === null ? null : (prev + 1) % photos.photos.length));
+  }, [photos.photos.length]);
   const prevPhoto = useCallback(() => {
-    setLightbox((prev) => (prev === null ? null : (prev - 1 + photos.length) % photos.length));
-  }, [photos.length]);
+    setLightbox((prev) => (prev === null ? null : (prev - 1 + photos.photos.length) % photos.photos.length));
+  }, [photos.photos.length]);
 
   useEffect(() => {
     if (lightbox === null) return;
@@ -24,6 +24,12 @@ export default function Photos() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [lightbox, closeLightbox, nextPhoto, prevPhoto]);
+
+  // Split heading to highlight one word
+  const words = photos.heading.split(" ");
+  const highlightIdx = words.findIndex((w) =>
+    w.toLowerCase().includes(photos.highlightWord.toLowerCase())
+  );
 
   return (
     <section id="photos" className="relative z-10 bg-bg border-b border-border">
@@ -40,15 +46,19 @@ export default function Photos() {
           className="font-display font-bold uppercase leading-[0.85] tracking-tight text-white mb-12"
           style={{ fontSize: "clamp(2.5rem, 7vw, 6rem)" }}
         >
-          Press <span className="text-primary">Photos</span>
+          {words.map((word, i) => (
+            <span key={i} className={i === highlightIdx ? "text-primary" : ""}>
+              {word}{i < words.length - 1 ? " " : ""}
+            </span>
+          ))}
         </h2>
 
         {/* Photo grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-border">
-          {photos.map((photo, i) => (
+          {photos.photos.map((photo, i) => (
             <div
               key={i}
-              className="photo-card bg-bg cursor-pointer aspect-[4/5] border-0"
+              className="photo-card bg-bg cursor-pointer aspect-[4/5]"
               onClick={() => setLightbox(i)}
             >
               <div className="lime-bar" />
@@ -85,8 +95,8 @@ export default function Photos() {
             ‹
           </button>
           <img
-            src={photos[lightbox].src}
-            alt={photos[lightbox].credit}
+            src={photos.photos[lightbox].src}
+            alt={photos.photos[lightbox].credit}
             className="max-h-[85vh] max-w-[90vw] object-contain"
             onClick={(e) => e.stopPropagation()}
           />
@@ -99,7 +109,7 @@ export default function Photos() {
           </button>
           <div className="absolute bottom-6 left-0 right-0 text-center">
             <span className="text-primary text-[10px] uppercase tracking-[0.25em]">
-              {photos[lightbox].credit}
+              {photos.photos[lightbox].credit}
             </span>
           </div>
         </div>

@@ -1,13 +1,13 @@
 import { Play } from "lucide-react";
-import { epkData } from "@/data/epkData";
+import type { SiteContent } from "@/data/epkData";
 
-export default function VideoStrip() {
-  const { videoStrip } = epkData;
+export default function VideoStrip({ content }: { content: SiteContent }) {
+  const { video } = content;
 
   return (
     <section className="relative z-10 bg-[#0d0d0d] border-b border-border">
       <a
-        href={videoStrip.url}
+        href={video.url}
         target="_blank"
         rel="noopener noreferrer"
         className="group block relative w-full overflow-hidden"
@@ -15,8 +15,8 @@ export default function VideoStrip() {
         {/* Thumbnail */}
         <div className="relative aspect-[21/9] md:aspect-[21/7] overflow-hidden">
           <img
-            src={videoStrip.thumbnail}
-            alt={videoStrip.title}
+            src={video.thumbnail}
+            alt={video.title}
             className="w-full h-full object-cover img-grayscale"
           />
           {/* Dark overlay */}
@@ -33,10 +33,10 @@ export default function VideoStrip() {
           <div className="absolute bottom-0 left-0 right-0 border-t border-border bg-bg/80 backdrop-blur-sm px-6 py-4 flex items-center justify-between">
             <div>
               <h3 className="font-display font-bold text-white text-lg md:text-xl uppercase leading-tight">
-                {videoStrip.title}
+                {video.title}
               </h3>
               <p className="text-muted text-[10px] uppercase tracking-wider mt-0.5">
-                {videoStrip.subtitle}
+                {video.subtitle}
               </p>
             </div>
             <span className="text-primary font-display font-bold uppercase text-xs tracking-wider hidden md:block">

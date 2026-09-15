@@ -1,21 +1,30 @@
-import { Instagram, Facebook, Youtube, Headphones, Music2 } from "lucide-react";
-import { epkData } from "@/data/epkData";
+import { Instagram, Facebook, Youtube, Headphones, Music2, Linkedin } from "lucide-react";
+import type { SiteContent } from "@/data/epkData";
 
-export default function Footer() {
-  const { artist, socials, streaming } = epkData;
+export default function Footer({ content }: { content: SiteContent }) {
+  const { footer } = content;
+
+  const iconMap: Record<string, React.ReactNode> = {
+    instagram: <Instagram className="w-4 h-4 text-secondary" />,
+    facebook: <Facebook className="w-4 h-4 text-secondary" />,
+    youtube: <Youtube className="w-4 h-4 text-secondary" />,
+    linkedin: <Linkedin className="w-4 h-4 text-secondary" />,
+    spotify: <Headphones className="w-4 h-4 text-secondary" />,
+    apple: <Music2 className="w-4 h-4 text-secondary" />,
+  };
 
   return (
     <footer className="relative z-10 bg-bg">
       <div className="max-w-7xl mx-auto px-6 py-12">
-        {/* Top section: logo + socials + streaming */}
+        {/* Top section: name + socials + streaming */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10 pb-10 border-b border-border">
-          {/* Logo */}
+          {/* Name */}
           <div>
             <div className="font-display font-bold text-white text-2xl uppercase tracking-tight leading-none mb-2">
-              Bhaswati<span className="text-primary">.</span>
+              {footer.artistName}
             </div>
             <p className="text-muted text-[10px] uppercase tracking-[0.2em]">
-              {artist.subtitle}
+              {footer.subtitle}
             </p>
           </div>
 
@@ -23,7 +32,7 @@ export default function Footer() {
           <div>
             <p className="text-muted text-[10px] uppercase tracking-[0.25em] mb-3">Follow</p>
             <div className="flex gap-3">
-              {socials.map((social, i) => (
+              {footer.socials.map((social, i) => (
                 <a
                   key={i}
                   href={social.url}
@@ -32,9 +41,7 @@ export default function Footer() {
                   aria-label={social.platform}
                   className="w-10 h-10 border border-border flex items-center justify-center transition-all hover:border-primary hover:bg-primary/10"
                 >
-                  {social.icon === "instagram" && <Instagram className="w-4 h-4 text-secondary hover:text-primary" />}
-                  {social.icon === "facebook" && <Facebook className="w-4 h-4 text-secondary hover:text-primary" />}
-                  {social.icon === "youtube" && <Youtube className="w-4 h-4 text-secondary hover:text-primary" />}
+                  {iconMap[social.icon] || <Headphones className="w-4 h-4 text-secondary" />}
                 </a>
               ))}
             </div>
@@ -44,7 +51,7 @@ export default function Footer() {
           <div>
             <p className="text-muted text-[10px] uppercase tracking-[0.25em] mb-3">Stream On</p>
             <div className="flex flex-wrap gap-2">
-              {streaming.map((platform, i) => (
+              {footer.streaming.map((platform, i) => (
                 <a
                   key={i}
                   href={platform.url}
@@ -52,10 +59,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 border border-border px-3 py-2 transition-all hover:border-primary"
                 >
-                  {platform.icon === "spotify" && <Headphones className="w-3.5 h-3.5 text-secondary" />}
-                  {platform.icon === "apple" && <Music2 className="w-3.5 h-3.5 text-secondary" />}
-                  {platform.icon === "jiosaavn" && <Music2 className="w-3.5 h-3.5 text-secondary" />}
-                  {platform.icon === "wynk" && <Music2 className="w-3.5 h-3.5 text-secondary" />}
+                  {iconMap[platform.icon] || <Music2 className="w-3.5 h-3.5 text-secondary" />}
                   <span className="text-secondary text-[10px] uppercase tracking-wider">{platform.platform}</span>
                 </a>
               ))}
@@ -66,10 +70,10 @@ export default function Footer() {
         {/* Copyright */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-muted text-[10px] uppercase tracking-[0.2em]">
-            © {new Date().getFullYear()} {artist.name}. All Rights Reserved.
+            © {new Date().getFullYear()} {footer.artistName}. All Rights Reserved.
           </p>
           <p className="text-muted text-[10px] uppercase tracking-[0.2em]">
-            {artist.socialHandle}
+            {footer.socialHandle}
           </p>
         </div>
       </div>

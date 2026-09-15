@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { epkData } from "@/data/epkData";
+import { Instagram, Facebook, Youtube, Headphones, Music2, Linkedin } from "lucide-react";
+import type { SiteContent } from "@/data/epkData";
 
-export default function Nav() {
+export default function Nav({ content }: { content: SiteContent }) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -9,6 +10,17 @@ export default function Nav() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const socials = content.footer.socials;
+
+  const iconMap: Record<string, React.ReactNode> = {
+    instagram: <Instagram className="w-4 h-4" />,
+    facebook: <Facebook className="w-4 h-4" />,
+    youtube: <Youtube className="w-4 h-4" />,
+    linkedin: <Linkedin className="w-4 h-4" />,
+    spotify: <Headphones className="w-4 h-4" />,
+    apple: <Music2 className="w-4 h-4" />,
+  };
 
   return (
     <nav
@@ -19,19 +31,12 @@ export default function Nav() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Logo */}
-        <a href="#top" className="font-display font-bold text-white text-xl uppercase tracking-tight leading-none">
-          BSG<span className="text-primary">.</span>
-        </a>
-
-        {/* Center nav links */}
+        {/* Nav links — left */}
         <div className="hidden md:flex items-center gap-8">
           {[
-            { label: "Bio", href: "#bio" },
+            { label: "About", href: "#about" },
             { label: "Music", href: "#music" },
             { label: "Photos", href: "#photos" },
-            { label: "Tour", href: "#tour" },
-            { label: "Press", href: "#press" },
             { label: "Contact", href: "#contact" },
           ].map((link) => (
             <a
@@ -44,13 +49,39 @@ export default function Nav() {
           ))}
         </div>
 
-        {/* Pulsing BOOK button */}
-        <a
-          href={`mailto:${epkData.artist.bookingEmail}`}
-          className="animate-pulse-cta bg-primary text-primary-fg font-display font-bold uppercase text-sm px-5 py-2.5 tracking-wide transition-colors hover:bg-white"
-        >
-          Book
-        </a>
+        {/* Mobile nav — show condensed links */}
+        <div className="flex md:hidden items-center gap-4">
+          {[
+            { label: "About", href: "#about" },
+            { label: "Music", href: "#music" },
+            { label: "Photos", href: "#photos" },
+            { label: "Contact", href: "#contact" },
+          ].map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              className="text-secondary text-xs font-light hover:text-primary transition-colors"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        {/* Social buttons — right */}
+        <div className="flex items-center gap-2">
+          {socials.map((social, i) => (
+            <a
+              key={i}
+              href={social.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.platform}
+              className="w-9 h-9 border border-border flex items-center justify-center text-secondary transition-all hover:border-primary hover:text-primary"
+            >
+              {iconMap[social.icon] || <Headphones className="w-4 h-4" />}
+            </a>
+          ))}
+        </div>
       </div>
     </nav>
   );

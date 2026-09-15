@@ -1,16 +1,18 @@
 import { Play, ArrowRight } from "lucide-react";
-import { epkData } from "@/data/epkData";
+import type { SiteContent } from "@/data/epkData";
 
-export default function Hero() {
-  const { artist, heroCta, heroStats } = epkData;
+export default function Hero({ content }: { content: SiteContent }) {
+  const { hero } = content;
+
+  const heading = `${hero.firstName} ${hero.lastName}`;
 
   return (
     <section id="top" className="relative min-h-screen w-full overflow-hidden">
       {/* Background image */}
       <div className="absolute inset-0">
         <img
-          src={artist.heroImage}
-          alt={artist.name}
+          src={hero.backgroundImage}
+          alt={heading}
           className="w-full h-full object-cover"
         />
         {/* Dual gradient overlay */}
@@ -19,10 +21,10 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 min-h-screen flex flex-col justify-center max-w-7xl mx-auto px-6 pt-20">
+      <div className="relative z-10 min-h-screen flex flex-col justify-center max-w-7xl mx-auto px-6 pt-20 pb-16">
         {/* Subtitle */}
         <p className="animate-clip-reveal text-primary font-display font-medium text-xs uppercase tracking-[0.3em] mb-6">
-          {artist.subtitle}
+          {hero.subtitle}
         </p>
 
         {/* Name — two-line clip reveal */}
@@ -31,31 +33,29 @@ export default function Hero() {
             className="animate-clip-reveal-delay-1 block"
             style={{ fontSize: "clamp(3.5rem, 14vw, 12rem)" }}
           >
-            {artist.firstName}
+            {hero.firstName}
           </span>
           <span
             className="animate-clip-reveal-delay-2 block text-primary"
             style={{ fontSize: "clamp(3.5rem, 14vw, 12rem)" }}
           >
-            {artist.lastName}
+            {hero.lastName}
           </span>
         </h1>
 
         {/* Subhead */}
         <p className="animate-fade-up-delay text-secondary text-base font-light mt-6 max-w-md leading-relaxed">
-          Bollywood playback singer and electrifying live performer. Vocals for Sachin-Jigar, collaborator with Benny John, trained by AR Rahman alumna.
+          {hero.description}
         </p>
 
-        {/* CTAs */}
-        <div className="animate-fade-up-delay flex items-center gap-4 mt-8">
+        {/* CTAs — SEO CTA + Showreel */}
+        <div className="animate-fade-up-delay flex flex-wrap items-center gap-4 mt-8">
           <a
-            href={heroCta.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={hero.ctaUrl}
             className="group inline-flex items-center gap-2 bg-primary text-primary-fg font-display font-bold uppercase text-sm px-6 py-3.5 tracking-wide transition-colors hover:bg-white"
           >
             <Play className="w-4 h-4 fill-current" />
-            {heroCta.label}
+            {hero.ctaLabel}
           </a>
           <a
             href="#music"
@@ -64,27 +64,6 @@ export default function Hero() {
             Listen
             <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </a>
-        </div>
-      </div>
-
-      {/* Stat strip — bottom edge */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 border-t border-border bg-bg/60 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4">
-          {heroStats.map((stat, i) => (
-            <div
-              key={i}
-              className={`py-5 px-2 text-center ${
-                i !== 0 ? "md:border-l border-border" : ""
-              } ${i === 1 ? "border-l border-border" : ""} ${i === 3 ? "md:border-l border-border" : ""} ${i === 2 ? "border-l border-border md:border-l" : ""}`}
-            >
-              <div className="font-display font-bold text-2xl md:text-3xl text-white leading-none">
-                {stat.value}
-              </div>
-              <div className="text-muted text-[10px] uppercase tracking-[0.2em] mt-1.5">
-                {stat.label}
-              </div>
-            </div>
-          ))}
         </div>
       </div>
     </section>

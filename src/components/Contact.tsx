@@ -1,15 +1,21 @@
 import { Mail } from "lucide-react";
-import { epkData } from "@/data/epkData";
+import type { SiteContent } from "@/data/epkData";
 
-export default function Contact() {
-  const { contacts, artist } = epkData;
+export default function Contact({ content }: { content: SiteContent }) {
+  const { contact } = content;
+
+  // Split heading to highlight one word
+  const words = contact.heading.split(" ");
+  const highlightIdx = words.findIndex((w) =>
+    w.toLowerCase().includes(contact.highlightWord.toLowerCase())
+  );
 
   return (
     <section id="contact" className="relative z-10 bg-bg border-b border-border">
       <div className="max-w-7xl mx-auto px-6 py-24 md:py-32">
         {/* Section kicker */}
         <div className="section-kicker">
-          <span className="num">006</span>
+          <span className="num">004</span>
           <span className="rule" />
           <span className="label">Contact</span>
         </div>
@@ -22,13 +28,17 @@ export default function Contact() {
               className="font-display font-bold uppercase leading-[0.85] tracking-tight text-white mb-6"
               style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)" }}
             >
-              Get In <span className="text-primary">Touch</span>
+              {words.map((word, i) => (
+                <span key={i} className={i === highlightIdx ? "text-primary" : ""}>
+                  {word}{i < words.length - 1 ? " " : ""}
+                </span>
+              ))}
             </h2>
             <p className="text-secondary text-sm font-light leading-relaxed max-w-sm mb-8">
-              For bookings, press inquiries, sync licensing, or general questions — reach out to the relevant contact below.
+              {contact.blurb}
             </p>
             <a
-              href={`mailto:${artist.bookingEmail}`}
+              href={`mailto:${contact.bookingEmail}`}
               className="inline-flex items-center gap-2 bg-primary text-primary-fg font-display font-bold uppercase text-sm px-6 py-3.5 tracking-wide transition-colors hover:bg-white"
             >
               <Mail className="w-4 h-4" />
@@ -38,20 +48,20 @@ export default function Contact() {
 
           {/* Right — contact cards grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border border border-border">
-            {contacts.map((contact, i) => (
+            {contact.contacts.map((c, i) => (
               <a
                 key={i}
-                href={`mailto:${contact.email}`}
+                href={`mailto:${c.email}`}
                 className="bg-bg p-5 group transition-colors hover:bg-card"
               >
                 <div className="text-primary text-[9px] uppercase tracking-[0.25em] mb-2">
-                  {contact.label}
+                  {c.label}
                 </div>
                 <div className="text-white text-sm font-light mb-1">
-                  {contact.name}
+                  {c.name}
                 </div>
                 <div className="text-secondary text-xs font-light break-all group-hover:text-primary transition-colors">
-                  {contact.email}
+                  {c.email}
                 </div>
               </a>
             ))}
