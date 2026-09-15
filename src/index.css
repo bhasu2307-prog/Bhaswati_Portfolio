@@ -1,13 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&family=Inter:wght@300;400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --color-gold: #d4af37;
-  --color-gold-light: #e8c869;
-  --color-gold-dark: #a8861f;
+  --color-bg: #080808;
+  --color-fg: #ffffff;
+  --color-card: #111111;
+  --color-primary: #c8ff00;
+  --color-primary-fg: #080808;
+  --color-muted: #555555;
+  --color-secondary: #999999;
+  --color-border: #1f1f1f;
+  --color-accent: #ff3cac;
 }
 
 * {
@@ -21,13 +27,19 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Poppins', sans-serif;
-  background-color: #0a0a0a;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  background-color: #080808;
   color: #ffffff;
   overflow-x: hidden;
 }
 
-/* Hide scrollbar for carousels */
+/* Display font utility */
+.font-display {
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+/* Hide scrollbar for carousels / ticker */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
@@ -36,63 +48,178 @@ body {
   scrollbar-width: none;
 }
 
-/* Gold gradient text */
-.text-gold-gradient {
-  background: linear-gradient(135deg, #d4af37 0%, #e8c869 50%, #d4af37 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Lime scrollbar globally */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #080808;
+}
+::-webkit-scrollbar-thumb {
+  background: #c8ff00;
 }
 
-/* Breathing pulse animation for primary CTA */
-@keyframes breathe {
+/* Section number kicker */
+.section-kicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 48px;
+}
+.section-kicker .num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  color: #c8ff00;
+  letter-spacing: 0.25em;
+}
+.section-kicker .rule {
+  flex: 1;
+  height: 1px;
+  background: #1f1f1f;
+  max-width: 80px;
+}
+.section-kicker .label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  color: #555555;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+/* Clip-path reveal animation for hero text */
+@keyframes clip-reveal {
+  0% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 1;
+  }
+}
+.animate-clip-reveal {
+  animation: clip-reveal 1s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+}
+.animate-clip-reveal-delay-1 {
+  animation: clip-reveal 1s cubic-bezier(0.77, 0, 0.175, 1) 0.2s forwards;
+  opacity: 0;
+}
+.animate-clip-reveal-delay-2 {
+  animation: clip-reveal 1s cubic-bezier(0.77, 0, 0.175, 1) 0.4s forwards;
+  opacity: 0;
+}
+.animate-clip-reveal-delay-3 {
+  animation: clip-reveal 1s cubic-bezier(0.77, 0, 0.175, 1) 0.6s forwards;
+  opacity: 0;
+}
+
+/* Fade up */
+@keyframes fade-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fade-up 0.8s ease-out forwards;
+}
+.animate-fade-up-delay {
+  animation: fade-up 0.8s ease-out 0.8s forwards;
+  opacity: 0;
+}
+
+/* Breathing pulse for CTA */
+@keyframes pulse-cta {
   0%, 100% {
-    box-shadow: 0 0 20px 0px rgba(212, 175, 55, 0.4), 0 0 40px 0px rgba(212, 175, 55, 0.1);
-    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(200, 255, 0, 0.4);
   }
   50% {
-    box-shadow: 0 0 30px 5px rgba(212, 175, 55, 0.6), 0 0 60px 10px rgba(212, 175, 55, 0.2);
-    transform: scale(1.03);
+    box-shadow: 0 0 20px 4px rgba(200, 255, 0, 0.6);
   }
 }
-.animate-breathe {
-  animation: breathe 2.5s ease-in-out infinite;
+.animate-pulse-cta {
+  animation: pulse-cta 2.5s ease-in-out infinite;
 }
 
-/* Marquee animation */
+/* Marquee */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
 .animate-marquee {
-  animation: marquee 25s linear infinite;
+  animation: marquee 30s linear infinite;
 }
 
-/* Glassmorphism card */
-.glass-card {
-  background: rgba(15, 15, 15, 0.5);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+/* Grayscale → color hover for images */
+.img-grayscale {
+  filter: grayscale(100%);
+  transition: filter 0.6s ease, transform 0.6s ease;
+}
+.img-grayscale:hover {
+  filter: grayscale(0%);
+  transform: scale(1.05);
 }
 
-/* Fixed background layer */
-.fixed-bg {
-  position: fixed;
+/* Lime top-bar hover for photo cards */
+.photo-card {
+  position: relative;
+  overflow: hidden;
+}
+.photo-card .lime-bar {
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  background-size: cover;
-  background-position: center top;
-  background-repeat: no-repeat;
-  z-index: -1;
+  height: 3px;
+  background: #c8ff00;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s ease;
+  z-index: 2;
+}
+.photo-card:hover .lime-bar {
+  transform: scaleX(1);
+}
+.photo-card .photo-credit {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #c8ff00;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 2;
+}
+.photo-card:hover .photo-credit {
+  opacity: 1;
 }
 
-/* Carousel snap */
-.snap-x-mandatory {
-  scroll-snap-type: x mandatory;
+/* Release card lime wash on hover */
+.release-card {
+  position: relative;
+  overflow: hidden;
 }
-.snap-start {
-  scroll-snap-align: start;
+.release-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(180deg, rgba(200, 255, 0, 0.06) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+.release-card:hover::before {
+  opacity: 1;
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid #c8ff00;
+  outline-offset: 2px;
 }

@@ -4,45 +4,41 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['Playfair Display', 'serif'],
-        sans: ['Poppins', 'sans-serif'],
+        display: ['Barlow Condensed', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
       },
       colors: {
-        gold: {
-          DEFAULT: '#d4af37',
-          light: '#e8c869',
-          dark: '#a8861f',
-        },
-        charcoal: {
-          DEFAULT: '#141414',
-          light: '#1e1e1e',
-          dark: '#0a0a0a',
-        },
+        bg: '#080808',
+        fg: '#ffffff',
+        card: '#111111',
+        primary: '#c8ff00',
+        'primary-fg': '#080808',
+        muted: '#555555',
+        secondary: '#999999',
+        border: '#1f1f1f',
+        accent: '#ff3cac',
+      },
+      borderRadius: {
+        'none': '0px',
       },
       animation: {
-        'fade-up': 'fadeUp 0.8s ease-out forwards',
-        'fade-in': 'fadeIn 0.8s ease-out forwards',
-        'breathe': 'breathe 2.5s ease-in-out infinite',
-        'marquee': 'marquee 25s linear infinite',
+        'clip-reveal': 'clip-reveal 1s cubic-bezier(0.77, 0, 0.175, 1) forwards',
+        'fade-up': 'fade-up 0.8s ease-out forwards',
+        'pulse-cta': 'pulse-cta 2.5s ease-in-out infinite',
+        'marquee': 'marquee 30s linear infinite',
       },
       keyframes: {
-        fadeUp: {
-          '0%': { opacity: '0', transform: 'translateY(30px) scale(0.98)' },
-          '100%': { opacity: '1', transform: 'translateY(0) scale(1)' },
+        'clip-reveal': {
+          '0%': { 'clip-path': 'inset(0 100% 0 0)', opacity: '0' },
+          '100%': { 'clip-path': 'inset(0 0 0 0)', opacity: '1' },
         },
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         },
-        breathe: {
-          '0%, 100%': {
-            boxShadow: '0 0 20px 0px rgba(212, 175, 55, 0.4), 0 0 40px 0px rgba(212, 175, 55, 0.1)',
-            transform: 'scale(1)',
-          },
-          '50%': {
-            boxShadow: '0 0 30px 5px rgba(212, 175, 55, 0.6), 0 0 60px 10px rgba(212, 175, 55, 0.2)',
-            transform: 'scale(1.03)',
-          },
+        'pulse-cta': {
+          '0%, 100%': { 'box-shadow': '0 0 0 0 rgba(200, 255, 0, 0.4)' },
+          '50%': { 'box-shadow': '0 0 20px 4px rgba(200, 255, 0, 0.6)' },
         },
         marquee: {
           '0%': { transform: 'translateX(0)' },
