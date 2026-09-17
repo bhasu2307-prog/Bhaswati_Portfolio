@@ -5,11 +5,7 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Music from "@/components/Music";
 import Photos from "@/components/Photos";
-import VideoStrip from "@/components/VideoStrip";
-import Rooms from "@/components/Rooms";
-import Rooms from "@/components/Rooms";
-import Rooms from "@/components/Rooms";
-import Rooms from "@/components/Rooms";
+import TechRider from "@/components/TechRider";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import StickyBookingBar from "@/components/StickyBookingBar";
@@ -45,13 +41,9 @@ function App() {
       <main>
         <Hero content={content} />
         <About content={content} />
-        <Rooms content={content} />
         <Music content={content} />
-        <Rooms content={content} />
         <Photos content={content} />
-        <Rooms content={content} />
-        <VideoStrip content={content} />
-        <Rooms content={content} />
+        <TechRider />
         <Contact content={content} />
       </main>
       <Footer content={content} />

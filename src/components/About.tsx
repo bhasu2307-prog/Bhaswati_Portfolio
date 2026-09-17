@@ -1,9 +1,9 @@
+import { Play } from "lucide-react";
 import type { SiteContent } from "@/data/epkData";
 
 export default function About({ content }: { content: SiteContent }) {
   const { about } = content;
 
-  // Split heading to highlight one word
   const words = about.heading.split(" ");
   const highlightIdx = words.findIndex((w) =>
     w.toLowerCase().includes(about.highlightWord.toLowerCase())
@@ -12,13 +12,6 @@ export default function About({ content }: { content: SiteContent }) {
   return (
     <section id="about" className="relative z-10 bg-bg border-b border-border">
       <div className="max-w-7xl mx-auto px-6 py-24 md:py-32">
-        {/* Section kicker */}
-        <div className="section-kicker">
-          <span className="num">001</span>
-          <span className="rule" />
-          <span className="label">About</span>
-        </div>
-
         {/* Heading */}
         <h2
           className="font-display font-bold uppercase leading-[0.85] tracking-tight text-white mb-12"
@@ -31,46 +24,48 @@ export default function About({ content }: { content: SiteContent }) {
           ))}
         </h2>
 
-        {/* Two images + text grid */}
+        {/* Showreel left, writeup right */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12">
-          {/* Image 1 */}
-          <div className="relative">
-            <div className="aspect-[3/4] overflow-hidden border border-border">
-              <img
-                src={about.image1}
-                alt={about.image1Label}
-                loading="lazy"
-                className="w-full h-full object-cover img-grayscale"
-              />
-            </div>
-            <div className="absolute bottom-0 left-0 bg-primary text-primary-fg font-display font-bold uppercase text-xs px-3 py-1.5 tracking-wider">
-              {about.image1Label}
-            </div>
+          {/* Left — Showreel video */}
+          <div>
+            <a
+              href={about.showreelUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group block relative w-full overflow-hidden border border-border"
+            >
+              <div className="relative aspect-video overflow-hidden">
+                <img
+                  src={about.showreelThumbnail}
+                  alt={about.showreelTitle}
+                  className="w-full h-full object-cover img-grayscale"
+                />
+                <div className="absolute inset-0 bg-bg/40 group-hover:bg-bg/20 transition-colors duration-500" />
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-16 h-16 border-2 border-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                    <Play className="w-6 h-6 text-primary fill-current ml-1" />
+                  </div>
+                </div>
+              </div>
+              <div className="border-t border-border p-4 bg-card">
+                <h3 className="font-display font-bold text-white text-sm uppercase leading-tight">
+                  {about.showreelTitle}
+                </h3>
+                <p className="text-muted text-[10px] mt-1 font-light leading-relaxed">
+                  {about.showreelDescription}
+                </p>
+              </div>
+            </a>
           </div>
 
-          {/* Image 2 */}
-          <div className="relative md:mt-16">
-            <div className="aspect-[3/4] overflow-hidden border border-border">
-              <img
-                src={about.image2}
-                alt={about.image2Label}
-                loading="lazy"
-                className="w-full h-full object-cover img-grayscale"
-              />
-            </div>
-            <div className="absolute bottom-0 left-0 bg-primary text-primary-fg font-display font-bold uppercase text-xs px-3 py-1.5 tracking-wider">
-              {about.image2Label}
-            </div>
+          {/* Right — Writeup */}
+          <div className="space-y-5">
+            {about.paragraphs.map((p, i) => (
+              <p key={i} className="text-secondary text-sm md:text-base font-light leading-relaxed">
+                {p}
+              </p>
+            ))}
           </div>
-        </div>
-
-        {/* Paragraphs */}
-        <div className="space-y-5 mb-12 max-w-2xl">
-          {about.paragraphs.map((p, i) => (
-            <p key={i} className="text-secondary text-sm md:text-base font-light leading-relaxed">
-              {p}
-            </p>
-          ))}
         </div>
 
         {/* Fact grid */}

@@ -88,13 +88,6 @@ export default function Music({ content }: { content: SiteContent }) {
   return (
     <section id="music" className="relative z-10 bg-[#0d0d0d] border-b border-border">
       <div className="max-w-7xl mx-auto px-6 py-24 md:py-32">
-        {/* Section kicker */}
-        <div className="section-kicker">
-          <span className="num">002</span>
-          <span className="rule" />
-          <span className="label">Music</span>
-        </div>
-
         {/* Headline */}
         <h2
           className="font-display font-bold uppercase leading-[0.85] tracking-tight text-white mb-6"

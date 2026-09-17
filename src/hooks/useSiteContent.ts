@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { supabase } from "@/lib/supabase";
 import { defaultContent, type SiteContent } from "@/data/epkData";
 
-const SECTIONS = ["hero", "about", "music", "photos", "video", "contact", "footer"] as const;
+const SECTIONS = ["hero", "about", "music", "photos", "contact", "footer"] as const;
 type Section = (typeof SECTIONS)[number];
 
 export function useSiteContent() {

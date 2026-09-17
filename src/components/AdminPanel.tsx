@@ -9,12 +9,10 @@ type SectionKey = keyof SiteContent;
 
 const SECTIONS: { key: SectionKey; label: string }[] = [
   { key: "hero", label: "Hero" },
-  { key: "about", label: "About (001)" },
-  { key: "music", label: "Music (002)" },
-  { key: "photos", label: "Photos (003)" },
-  { key: "video", label: "Showreel (003b)" },
-  { key: "rooms", label: "Rooms (004)" },
-  { key: "contact", label: "Contact (005)" },
+  { key: "about", label: "About" },
+  { key: "music", label: "Music" },
+  { key: "photos", label: "Photos" },
+  { key: "contact", label: "Contact" },
   { key: "footer", label: "Footer" },
 ];
 
@@ -202,7 +200,7 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
               {/* Section content */}
               {isOpen && (
                 <div className="border-t border-border p-5 space-y-4">
-                  {/* HERO */}
+                  {/* HERO — no button editing */}
                   {section.key === "hero" && (
                     <>
                       <div className="grid grid-cols-2 gap-3">
@@ -223,26 +221,6 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                         <label className={labelClass}>Description</label>
                         <textarea className={inputClass} rows={3} value={content.hero.description} onChange={(e) => updateField("hero", "description", e.target.value)} />
                       </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className={labelClass}>CTA Label</label>
-                          <input className={inputClass} value={content.hero.ctaLabel} onChange={(e) => updateField("hero", "ctaLabel", e.target.value)} />
-                        </div>
-                        <div>
-                          <label className={labelClass}>CTA URL</label>
-                          <input className={inputClass} value={content.hero.ctaUrl} onChange={(e) => updateField("hero", "ctaUrl", e.target.value)} />
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className={labelClass}>Secondary CTA Label</label>
-                          <input className={inputClass} value={content.hero.secondaryCtaLabel} onChange={(e) => updateField("hero", "secondaryCtaLabel", e.target.value)} />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Secondary CTA URL</label>
-                          <input className={inputClass} value={content.hero.secondaryCtaUrl} onChange={(e) => updateField("hero", "secondaryCtaUrl", e.target.value)} />
-                        </div>
-                      </div>
                       <div>
                         <label className={labelClass}>Background Image URL</label>
                         <input className={inputClass} value={content.hero.backgroundImage} onChange={(e) => updateField("hero", "backgroundImage", e.target.value)} />
@@ -250,6 +228,9 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                           <img src={content.hero.backgroundImage} alt="Preview" className="mt-2 w-full h-32 object-cover border border-border" />
                         )}
                       </div>
+                      <p className="text-muted text-[10px] uppercase tracking-wider pt-2 border-t border-border">
+                        Buttons are not editable — they are hardcoded for SEO.
+                      </p>
                     </>
                   )}
 
@@ -264,8 +245,30 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                         <label className={labelClass}>Highlight Word (shown in lime)</label>
                         <input className={inputClass} value={content.about.highlightWord} onChange={(e) => updateField("about", "highlightWord", e.target.value)} />
                       </div>
+                      {/* Showreel */}
+                      <div className="border border-border p-3 space-y-2">
+                        <span className="text-muted text-[10px] uppercase tracking-wider">Showreel Video</span>
+                        <div>
+                          <label className={labelClass}>Showreel Title</label>
+                          <input className={inputClass} value={content.about.showreelTitle} onChange={(e) => updateField("about", "showreelTitle", e.target.value)} />
+                        </div>
+                        <div>
+                          <label className={labelClass}>Showreel YouTube URL</label>
+                          <input className={inputClass} value={content.about.showreelUrl} onChange={(e) => updateField("about", "showreelUrl", e.target.value)} />
+                        </div>
+                        <div>
+                          <label className={labelClass}>Showreel Thumbnail URL</label>
+                          <input className={inputClass} value={content.about.showreelThumbnail} onChange={(e) => updateField("about", "showreelThumbnail", e.target.value)} />
+                          {content.about.showreelThumbnail && <img src={content.about.showreelThumbnail} alt="Preview" className="mt-2 w-full h-32 object-cover border border-border" />}
+                        </div>
+                        <div>
+                          <label className={labelClass}>Showreel Description</label>
+                          <textarea className={inputClass} rows={2} value={content.about.showreelDescription} onChange={(e) => updateField("about", "showreelDescription", e.target.value)} />
+                        </div>
+                      </div>
+                      {/* Paragraphs */}
                       <div>
-                        <label className={labelClass}>Paragraphs</label>
+                        <label className={labelClass}>About Writeup Paragraphs</label>
                         {content.about.paragraphs.map((p, i) => (
                           <div key={i} className="flex gap-2 mb-2">
                             <textarea className={inputClass} rows={3} value={p} onChange={(e) => {
@@ -282,20 +285,7 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                         ))}
                         <button onClick={() => updateField("about", "paragraphs", [...content.about.paragraphs, "New paragraph"])} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Paragraph</button>
                       </div>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className={labelClass}>Image 1 URL</label>
-                          <input className={inputClass} value={content.about.image1} onChange={(e) => updateField("about", "image1", e.target.value)} />
-                          <input className={`${inputClass} mt-2`} placeholder="Label" value={content.about.image1Label} onChange={(e) => updateField("about", "image1Label", e.target.value)} />
-                          {content.about.image1 && <img src={content.about.image1} alt="Preview" className="mt-2 w-full h-32 object-cover border border-border" />}
-                        </div>
-                        <div>
-                          <label className={labelClass}>Image 2 URL</label>
-                          <input className={inputClass} value={content.about.image2} onChange={(e) => updateField("about", "image2", e.target.value)} />
-                          <input className={`${inputClass} mt-2`} placeholder="Label" value={content.about.image2Label} onChange={(e) => updateField("about", "image2Label", e.target.value)} />
-                          {content.about.image2 && <img src={content.about.image2} alt="Preview" className="mt-2 w-full h-32 object-cover border border-border" />}
-                        </div>
-                      </div>
+                      {/* Facts */}
                       <div>
                         <label className={labelClass}>Facts</label>
                         {content.about.facts.map((fact, i) => (
@@ -345,39 +335,39 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                       <div className="border-t border-border pt-4 mt-4">
                         <label className={labelClass}>Releases</label>
                         {content.music.releases.map((release, i) => (
-                        <div key={i} className="border border-border p-3 space-y-2">
-                          <div className="flex justify-between items-center">
-                            <span className="text-muted text-[10px] uppercase tracking-wider">Release {i + 1}</span>
-                            <button onClick={() => removeArrayItem("music", "releases", i)} className="text-accent hover:text-white"><Trash2 className="w-4 h-4" /></button>
+                          <div key={i} className="border border-border p-3 space-y-2 mb-2">
+                            <div className="flex justify-between items-center">
+                              <span className="text-muted text-[10px] uppercase tracking-wider">Release {i + 1}</span>
+                              <button onClick={() => removeArrayItem("music", "releases", i)} className="text-accent hover:text-white"><Trash2 className="w-4 h-4" /></button>
+                            </div>
+                            <input className={inputClass} placeholder="Title" value={release.title} onChange={(e) => updateArrayItem("music", "releases", i, "title", e.target.value)} />
+                            <div className="grid grid-cols-3 gap-2">
+                              <select className={inputClass} value={release.type} onChange={(e) => updateArrayItem("music", "releases", i, "type", e.target.value)}>
+                                <option value="SINGLE">SINGLE</option>
+                                <option value="EP">EP</option>
+                                <option value="ALBUM">ALBUM</option>
+                              </select>
+                              <input className={inputClass} placeholder="Year" value={release.year} onChange={(e) => updateArrayItem("music", "releases", i, "year", e.target.value)} />
+                              <input className={inputClass} placeholder="Streams" value={release.streams} onChange={(e) => updateArrayItem("music", "releases", i, "streams", e.target.value)} />
+                            </div>
+                            <input className={inputClass} placeholder="Cover Image URL" value={release.cover} onChange={(e) => updateArrayItem("music", "releases", i, "cover", e.target.value)} />
+                            <div className="grid grid-cols-2 gap-2">
+                              <input className={inputClass} placeholder="Link Label" value={release.links[0]?.label || ""} onChange={(e) => {
+                                const links = [...release.links];
+                                if (links[0]) links[0] = { ...links[0], label: e.target.value };
+                                else links[0] = { label: e.target.value, url: "" };
+                                updateArrayItem("music", "releases", i, "links", links as unknown as string);
+                              }} />
+                              <input className={inputClass} placeholder="Link URL" value={release.links[0]?.url || ""} onChange={(e) => {
+                                const links = [...release.links];
+                                if (links[0]) links[0] = { ...links[0], url: e.target.value };
+                                else links[0] = { label: "", url: e.target.value };
+                                updateArrayItem("music", "releases", i, "links", links as unknown as string);
+                              }} />
+                            </div>
                           </div>
-                          <input className={inputClass} placeholder="Title" value={release.title} onChange={(e) => updateArrayItem("music", "releases", i, "title", e.target.value)} />
-                          <div className="grid grid-cols-3 gap-2">
-                            <select className={inputClass} value={release.type} onChange={(e) => updateArrayItem("music", "releases", i, "type", e.target.value)}>
-                              <option value="SINGLE">SINGLE</option>
-                              <option value="EP">EP</option>
-                              <option value="ALBUM">ALBUM</option>
-                            </select>
-                            <input className={inputClass} placeholder="Year" value={release.year} onChange={(e) => updateArrayItem("music", "releases", i, "year", e.target.value)} />
-                            <input className={inputClass} placeholder="Streams" value={release.streams} onChange={(e) => updateArrayItem("music", "releases", i, "streams", e.target.value)} />
-                          </div>
-                          <input className={inputClass} placeholder="Cover Image URL" value={release.cover} onChange={(e) => updateArrayItem("music", "releases", i, "cover", e.target.value)} />
-                          <div className="grid grid-cols-2 gap-2">
-                            <input className={inputClass} placeholder="Link Label" value={release.links[0]?.label || ""} onChange={(e) => {
-                              const links = [...release.links];
-                              if (links[0]) links[0] = { ...links[0], label: e.target.value };
-                              else links[0] = { label: e.target.value, url: "" };
-                              updateArrayItem("music", "releases", i, "links", links as unknown as string);
-                            }} />
-                            <input className={inputClass} placeholder="Link URL" value={release.links[0]?.url || ""} onChange={(e) => {
-                              const links = [...release.links];
-                              if (links[0]) links[0] = { ...links[0], url: e.target.value };
-                              else links[0] = { label: "", url: e.target.value };
-                              updateArrayItem("music", "releases", i, "links", links as unknown as string);
-                            }} />
-                          </div>
-                        </div>
-                      ))}
-                      <button onClick={() => addArrayItem("music", "releases", { title: "New Release", type: "SINGLE", year: "2024", cover: "", streams: "0", links: [{ label: "YouTube", url: "" }], tagColor: "#c8ff00" })} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Release</button>
+                        ))}
+                        <button onClick={() => addArrayItem("music", "releases", { title: "New Release", type: "SINGLE", year: "2024", cover: "", streams: "0", links: [{ label: "YouTube", url: "" }], tagColor: "#c8ff00" })} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Release</button>
                       </div>
                     </>
                   )}
@@ -406,56 +396,6 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                     </>
                   )}
 
-                  {/* VIDEO */}
-                  {section.key === "video" && (
-                    <>
-                      <div>
-                        <label className={labelClass}>Title</label>
-                        <input className={inputClass} value={content.video.title} onChange={(e) => updateField("video", "title", e.target.value)} />
-                      </div>
-                      <div>
-                        <label className={labelClass}>Subtitle</label>
-                        <input className={inputClass} value={content.video.subtitle} onChange={(e) => updateField("video", "subtitle", e.target.value)} />
-                      </div>
-                      <div>
-                        <label className={labelClass}>Video URL</label>
-                        <input className={inputClass} value={content.video.url} onChange={(e) => updateField("video", "url", e.target.value)} />
-                      </div>
-                      <div>
-                        <label className={labelClass}>Thumbnail URL</label>
-                        <input className={inputClass} value={content.video.thumbnail} onChange={(e) => updateField("video", "thumbnail", e.target.value)} />
-                        {content.video.thumbnail && <img src={content.video.thumbnail} alt="Preview" className="mt-2 w-full h-32 object-cover border border-border" />}
-                      </div>
-                    </>
-                  )}
-
-                  {/* ROOMS */}
-                  {section.key === "rooms" && (
-                    <>
-                      <div className="grid grid-cols-2 gap-3">
-                        <div>
-                          <label className={labelClass}>Heading</label>
-                          <input className={inputClass} value={content.rooms.heading} onChange={(e) => updateField("rooms", "heading", e.target.value)} />
-                        </div>
-                        <div>
-                          <label className={labelClass}>Highlight Word</label>
-                          <input className={inputClass} value={content.rooms.highlightWord} onChange={(e) => updateField("rooms", "highlightWord", e.target.value)} />
-                        </div>
-                      </div>
-                      {content.rooms.items.map((room, i) => (
-                        <div key={i} className="border border-border p-3 space-y-2 mb-2">
-                          <div className="flex justify-between items-center">
-                            <span className="text-muted text-[10px] uppercase tracking-wider">Room {i + 1}</span>
-                            <button onClick={() => removeArrayItem("rooms", "items", i)} className="text-accent hover:text-white"><Trash2 className="w-4 h-4" /></button>
-                          </div>
-                          <input className={inputClass} placeholder="Title" value={room.title} onChange={(e) => updateArrayItem("rooms", "items", i, "title", e.target.value)} />
-                          <textarea className={inputClass} rows={2} placeholder="Description" value={room.description} onChange={(e) => updateArrayItem("rooms", "items", i, "description", e.target.value)} />
-                        </div>
-                      ))}
-                      <button onClick={() => addArrayItem("rooms", "items", { title: "New Room", description: "" })} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Room</button>
-                    </>
-                  )}
-
                   {/* CONTACT */}
                   {section.key === "contact" && (
                     <>
@@ -475,17 +415,22 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                       </div>
                       <div>
                         <label className={labelClass}>Booking Email</label>
-                        <input className={inputClass} value={content.contact.bookingEmail} onChange={(e) => updateField("contact", "bookingEmail", e.target.value)} />
+                        <input className={inputClass} value={contact_email(content)} onChange={(e) => updateField("contact", "bookingEmail", e.target.value)} />
                       </div>
-                      {content.contact.contacts.map((contact, i) => (
+                      <div>
+                        <label className={labelClass}>Instagram DM URL</label>
+                        <input className={inputClass} value={content.contact.instagramDmUrl} onChange={(e) => updateField("contact", "instagramDmUrl", e.target.value)} />
+                        <p className="text-muted text-[10px] mt-1">Use format: https://ig.me/m/YOUR_USERNAME</p>
+                      </div>
+                      {content.contact.contacts.map((c, i) => (
                         <div key={i} className="border border-border p-3 space-y-2">
                           <div className="flex justify-between items-center">
                             <span className="text-muted text-[10px] uppercase tracking-wider">Contact {i + 1}</span>
                             <button onClick={() => removeArrayItem("contact", "contacts", i)} className="text-accent hover:text-white"><Trash2 className="w-4 h-4" /></button>
                           </div>
-                          <input className={inputClass} placeholder="Label" value={contact.label} onChange={(e) => updateArrayItem("contact", "contacts", i, "label", e.target.value)} />
-                          <input className={inputClass} placeholder="Name" value={contact.name} onChange={(e) => updateArrayItem("contact", "contacts", i, "name", e.target.value)} />
-                          <input className={inputClass} placeholder="Email" value={contact.email} onChange={(e) => updateArrayItem("contact", "contacts", i, "email", e.target.value)} />
+                          <input className={inputClass} placeholder="Label" value={c.label} onChange={(e) => updateArrayItem("contact", "contacts", i, "label", e.target.value)} />
+                          <input className={inputClass} placeholder="Name" value={c.name} onChange={(e) => updateArrayItem("contact", "contacts", i, "name", e.target.value)} />
+                          <input className={inputClass} placeholder="Email" value={c.email} onChange={(e) => updateArrayItem("contact", "contacts", i, "email", e.target.value)} />
                         </div>
                       ))}
                       <button onClick={() => addArrayItem("contact", "contacts", { label: "New Contact", name: "", email: "" })} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Contact</button>
@@ -561,10 +506,19 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
           );
         })}
 
+        <div className="border border-border p-4 mt-4">
+          <p className="text-muted text-[10px] uppercase tracking-wider mb-1">Tech Rider</p>
+          <p className="text-secondary text-xs font-light">The Tech Rider section is not editable via the CMS. It contains fixed technical requirements for venues.</p>
+        </div>
+
         <p className="text-muted text-[10px] uppercase tracking-wider text-center pt-4">
           Changes save to the database and appear on the live site after refresh.
         </p>
       </div>
     </div>
   );
+}
+
+function contact_email(content: SiteContent): string {
+  return content.contact.bookingEmail;
 }

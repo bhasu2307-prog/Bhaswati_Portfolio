@@ -22,6 +22,14 @@ export default function Nav({ content }: { content: SiteContent }) {
     apple: <Music2 className="w-4 h-4" />,
   };
 
+  const navLinks = [
+    { label: "About", href: "#about" },
+    { label: "Music", href: "#music" },
+    { label: "Photos", href: "#photos" },
+    { label: "Tech Rider", href: "#tech-rider" },
+    { label: "Contact", href: "#contact" },
+  ];
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -31,15 +39,8 @@ export default function Nav({ content }: { content: SiteContent }) {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Nav links — left */}
         <div className="hidden md:flex items-center gap-8">
-          {[
-            { label: "About", href: "#about" },
-            { label: "Music", href: "#music" },
-            { label: "Photos", href: "#photos" },
-            { label: "Rooms", href: "#rooms" },
-            { label: "Contact", href: "#contact" },
-          ].map((link) => (
+          {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
@@ -50,26 +51,18 @@ export default function Nav({ content }: { content: SiteContent }) {
           ))}
         </div>
 
-        {/* Mobile nav — show condensed links */}
         <div className="flex md:hidden items-center gap-3">
-          {[
-            { label: "About", href: "#about" },
-            { label: "Music", href: "#music" },
-            { label: "Photos", href: "#photos" },
-            { label: "Rooms", href: "#rooms" },
-            { label: "Contact", href: "#contact" },
-          ].map((link) => (
+          {navLinks.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-secondary text-xs font-light hover:text-primary transition-colors"
+              className="text-secondary text-[11px] font-light hover:text-primary transition-colors"
             >
               {link.label}
             </a>
           ))}
         </div>
 
-        {/* Social buttons — right */}
         <div className="flex items-center gap-2">
           {socials.map((social, i) => (
             <a

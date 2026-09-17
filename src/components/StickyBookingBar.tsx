@@ -12,7 +12,7 @@ export default function StickyBookingBar({ content }: { content: SiteContent }) 
           className="flex items-center justify-center w-full bg-primary text-primary-fg font-display font-bold uppercase text-sm py-3.5 tracking-wide animate-pulse-cta"
         >
           <Mail className="w-4 h-4 mr-2" />
-          Book Live Bollywood Music
+          Book Now
         </a>
       </div>
     </div>

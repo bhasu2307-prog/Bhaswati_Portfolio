@@ -39,31 +39,22 @@ export interface StreamingPlatform {
   icon: string;
 }
 
-export interface RoomItem {
-  title: string;
-  description: string;
-}
-
 export interface SiteContent {
   hero: {
     firstName: string;
     lastName: string;
     subtitle: string;
     description: string;
-    ctaLabel: string;
-    ctaUrl: string;
-    secondaryCtaLabel: string;
-    secondaryCtaUrl: string;
     backgroundImage: string;
   };
   about: {
     heading: string;
     highlightWord: string;
     paragraphs: string[];
-    image1: string;
-    image1Label: string;
-    image2: string;
-    image2Label: string;
+    showreelTitle: string;
+    showreelUrl: string;
+    showreelThumbnail: string;
+    showreelDescription: string;
     facts: { label: string; value: string }[];
   };
   music: {
@@ -79,22 +70,12 @@ export interface SiteContent {
     highlightWord: string;
     photos: PhotoItem[];
   };
-  video: {
-    title: string;
-    subtitle: string;
-    url: string;
-    thumbnail: string;
-  };
-  rooms: {
-    heading: string;
-    highlightWord: string;
-    items: RoomItem[];
-  };
   contact: {
     heading: string;
     highlightWord: string;
     blurb: string;
     bookingEmail: string;
+    instagramDmUrl: string;
     contacts: ContactCard[];
   };
   footer: {
@@ -106,6 +87,57 @@ export interface SiteContent {
   };
 }
 
+export interface TechRiderItem {
+  category: string;
+  items: string[];
+}
+
+export const techRider: TechRiderItem[] = [
+  {
+    category: "Vocal Requirements",
+    items: [
+      "1x Shure SM58 or equivalent wireless handheld microphone",
+      "1x floor monitor wedge (stage left)",
+      "Reverb/delay on vocal channel (preferably TC Helicon or equivalent)",
+    ],
+  },
+  {
+    category: "Band Backline",
+    items: [
+      "1x keyboard/synth with sustain pedal (Yamaha or Roland preferred)",
+      "1x acoustic guitar with DI box and cable",
+      "1x Cajon / percussion kit with microphone",
+      "1x bass guitar amplifier (minimum 100W)",
+    ],
+  },
+  {
+    category: "PA & Monitoring",
+    items: [
+      "FOH PA system suited to venue capacity (minimum 2kW for 200+ guests)",
+      "8-channel mixing desk minimum (16 preferred)",
+      "2x floor monitors for band",
+      "DI boxes x3 minimum",
+    ],
+  },
+  {
+    category: "Stage & Lighting",
+    items: [
+      "Minimum stage area: 4m x 3m (larger preferred for full band)",
+      "Basic stage lighting (warm wash + 2 spotlights on vocal position)",
+      "1x microphone stand (boom arm preferred)",
+      "Power: 3x 13A sockets minimum at stage area",
+    ],
+  },
+  {
+    category: "Technical Contact",
+    items: [
+      "Sound check: minimum 90 minutes before doors",
+      "Technical contact to be available from load-in through sound check",
+      "Set list and stage plot provided 48 hours before performance",
+    ],
+  },
+];
+
 function ytThumb(id: string): string {
   return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 }
@@ -116,10 +148,6 @@ export const defaultContent: SiteContent = {
     lastName: "Sen Gupta",
     subtitle: "Singer / Live Performer / Playback Artist",
     description: "A Bollywood voice raised on riyaaz — bringing the songs that raised us to your stage, live, wherever home is now.",
-    ctaLabel: "Book Live Bollywood Music",
-    ctaUrl: "mailto:bhaswatis.music@gmail.com",
-    secondaryCtaLabel: "Watch Showreel",
-    secondaryCtaUrl: "https://youtu.be/_RQKF-RxzMk",
     backgroundImage: "https://i.ytimg.com/vi/77AX44whQyY/maxresdefault.jpg",
   },
   about: {
@@ -133,10 +161,10 @@ export const defaultContent: SiteContent = {
       "Now I bring that voice to stages across the US, Canada and India — to weddings, galas and campus nights full of people far from where they grew up. When the first familiar notes hit, I watch a room remember home. That is the whole reason I do this.",
       "I do not just want you to hear the song. For three minutes, I want the whole room to feel like it is back home.",
     ],
-    image1: "https://images.pexels.com/photos/32491407/pexels-photo-32491407.jpeg?auto=compress&cs=tinysrgb&h=900&w=600",
-    image1Label: "Live / On Stage",
-    image2: "https://images.pexels.com/photos/9418230/pexels-photo-9418230.jpeg?auto=compress&cs=tinysrgb&h=900&w=600",
-    image2Label: "Studio / Playback",
+    showreelTitle: "Hear it for yourself.",
+    showreelUrl: "https://youtu.be/_RQKF-RxzMk",
+    showreelThumbnail: ytThumb("_RQKF-RxzMk"),
+    showreelDescription: "Words can only carry a voice so far. Sixty seconds is all it takes to feel the room — the energy, the range, and that hush right before the chorus lands.",
     facts: [
       { label: "Based", value: "Mumbai / Touring US & Canada" },
       { label: "Genres", value: "Bollywood / Folk / Pop / Semi-Classical" },
@@ -207,27 +235,12 @@ export const defaultContent: SiteContent = {
       { src: "https://images.pexels.com/photos/16929699/pexels-photo-16929699.jpeg?auto=compress&cs=tinysrgb&h=800&w=600", credit: "Feature / Jaipur" },
     ],
   },
-  video: {
-    title: "Hear it for yourself.",
-    subtitle: "Showreel / 60 seconds",
-    url: "https://youtu.be/_RQKF-RxzMk",
-    thumbnail: ytThumb("_RQKF-RxzMk"),
-  },
-  rooms: {
-    heading: "The rooms I love to fill",
-    highlightWord: "fill",
-    items: [
-      { title: "South Asian Weddings & Sangeet", description: "Full live-band sets for the baraat, sangeet and reception — authentic Hindi and Bollywood song lists for desi weddings across the US and Canada." },
-      { title: "Corporate & Diwali Galas", description: "Polished, brand-appropriate live entertainment for corporate galas, Diwali nights, cultural associations and award evenings." },
-      { title: "University & College Shows", description: "High-energy Bollywood concert sets for South Asian student associations and campus culture nights." },
-      { title: "Private & Club Shows", description: "Intimate live-band evenings and club nights — from soulful ghazals to a full Bollywood dance floor." },
-    ],
-  },
   contact: {
     heading: "Let's give your night a voice",
     highlightWord: "voice",
     blurb: "Tell me about your evening — the date, the city, the people who will be in the room. You'll hear back from me personally, not an autoresponder. This part I like to do myself.",
     bookingEmail: "bhaswatis.music@gmail.com",
+    instagramDmUrl: "https://ig.me/m/itsmebsg",
     contacts: [
       { label: "Management", name: "Rohan Mehta", email: "rohan@bhaswatimusic.com" },
       { label: "Booking — India", name: "Priya Sharma", email: "priya@bhaswatimusic.com" },

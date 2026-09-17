@@ -1,4 +1,4 @@
-import { Play, ArrowRight, Mail } from "lucide-react";
+import { Play, Mail } from "lucide-react";
 import type { SiteContent } from "@/data/epkData";
 
 export default function Hero({ content }: { content: SiteContent }) {
@@ -47,23 +47,21 @@ export default function Hero({ content }: { content: SiteContent }) {
           {hero.description}
         </p>
 
-        {/* CTAs — SEO-optimized primary booking CTA + showreel */}
+        {/* CTAs — not editable via CMS, hardcoded for SEO */}
         <div className="animate-fade-up-delay flex flex-wrap items-center gap-4 mt-8">
           <a
-            href={hero.ctaUrl}
+            href="mailto:bhaswatis.music@gmail.com?subject=Booking%20Inquiry%20—%20Live%20Bollywood%20Music"
             className="group inline-flex items-center gap-2 bg-primary text-primary-fg font-display font-bold uppercase text-sm px-6 py-3.5 tracking-wide transition-colors hover:bg-white"
           >
             <Mail className="w-4 h-4" />
-            {hero.ctaLabel}
+            Book Live Bollywood Music
           </a>
           <a
-            href={hero.secondaryCtaUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#about"
             className="group inline-flex items-center gap-2 border border-border text-white font-display font-bold uppercase text-sm px-6 py-3.5 tracking-wide transition-all hover:border-primary hover:text-primary"
           >
             <Play className="w-4 h-4 fill-current" />
-            {hero.secondaryCtaLabel}
+            Watch Showreel
           </a>
         </div>
       </div>
