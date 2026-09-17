@@ -1,9 +1,8 @@
-import { Play, ArrowRight } from "lucide-react";
+import { Play, ArrowRight, Mail } from "lucide-react";
 import type { SiteContent } from "@/data/epkData";
 
 export default function Hero({ content }: { content: SiteContent }) {
   const { hero } = content;
-
   const heading = `${hero.firstName} ${hero.lastName}`;
 
   return (
@@ -48,21 +47,23 @@ export default function Hero({ content }: { content: SiteContent }) {
           {hero.description}
         </p>
 
-        {/* CTAs — SEO CTA + Showreel */}
+        {/* CTAs — SEO-optimized primary booking CTA + showreel */}
         <div className="animate-fade-up-delay flex flex-wrap items-center gap-4 mt-8">
           <a
             href={hero.ctaUrl}
             className="group inline-flex items-center gap-2 bg-primary text-primary-fg font-display font-bold uppercase text-sm px-6 py-3.5 tracking-wide transition-colors hover:bg-white"
           >
-            <Play className="w-4 h-4 fill-current" />
+            <Mail className="w-4 h-4" />
             {hero.ctaLabel}
           </a>
           <a
-            href="#music"
+            href={hero.secondaryCtaUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 border border-border text-white font-display font-bold uppercase text-sm px-6 py-3.5 tracking-wide transition-all hover:border-primary hover:text-primary"
           >
-            Listen
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            <Play className="w-4 h-4 fill-current" />
+            {hero.secondaryCtaLabel}
           </a>
         </div>
       </div>

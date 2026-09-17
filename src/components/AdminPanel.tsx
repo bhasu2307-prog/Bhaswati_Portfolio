@@ -12,8 +12,9 @@ const SECTIONS: { key: SectionKey; label: string }[] = [
   { key: "about", label: "About (001)" },
   { key: "music", label: "Music (002)" },
   { key: "photos", label: "Photos (003)" },
-  { key: "video", label: "Video Strip" },
-  { key: "contact", label: "Contact (004)" },
+  { key: "video", label: "Showreel (003b)" },
+  { key: "rooms", label: "Rooms (004)" },
+  { key: "contact", label: "Contact (005)" },
   { key: "footer", label: "Footer" },
 ];
 
@@ -232,6 +233,16 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                           <input className={inputClass} value={content.hero.ctaUrl} onChange={(e) => updateField("hero", "ctaUrl", e.target.value)} />
                         </div>
                       </div>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className={labelClass}>Secondary CTA Label</label>
+                          <input className={inputClass} value={content.hero.secondaryCtaLabel} onChange={(e) => updateField("hero", "secondaryCtaLabel", e.target.value)} />
+                        </div>
+                        <div>
+                          <label className={labelClass}>Secondary CTA URL</label>
+                          <input className={inputClass} value={content.hero.secondaryCtaUrl} onChange={(e) => updateField("hero", "secondaryCtaUrl", e.target.value)} />
+                        </div>
+                      </div>
                       <div>
                         <label className={labelClass}>Background Image URL</label>
                         <input className={inputClass} value={content.hero.backgroundImage} onChange={(e) => updateField("hero", "backgroundImage", e.target.value)} />
@@ -312,7 +323,28 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                           <input className={inputClass} value={content.music.highlightWord} onChange={(e) => updateField("music", "highlightWord", e.target.value)} />
                         </div>
                       </div>
-                      {content.music.releases.map((release, i) => (
+                      <div>
+                        <label className={labelClass}>Showcase Description</label>
+                        <textarea className={inputClass} rows={2} value={content.music.showcaseDescription} onChange={(e) => updateField("music", "showcaseDescription", e.target.value)} />
+                      </div>
+                      <div>
+                        <label className={labelClass}>Showcase Videos</label>
+                        {content.music.showcaseVideos.map((video, i) => (
+                          <div key={i} className="border border-border p-3 space-y-2 mb-2">
+                            <div className="flex justify-between items-center">
+                              <span className="text-muted text-[10px] uppercase tracking-wider">Video {i + 1}</span>
+                              <button onClick={() => removeArrayItem("music", "showcaseVideos", i)} className="text-accent hover:text-white"><Trash2 className="w-4 h-4" /></button>
+                            </div>
+                            <input className={inputClass} placeholder="Title" value={video.title} onChange={(e) => updateArrayItem("music", "showcaseVideos", i, "title", e.target.value)} />
+                            <input className={inputClass} placeholder="Description" value={video.description} onChange={(e) => updateArrayItem("music", "showcaseVideos", i, "description", e.target.value)} />
+                            <input className={inputClass} placeholder="YouTube URL" value={video.url} onChange={(e) => updateArrayItem("music", "showcaseVideos", i, "url", e.target.value)} />
+                          </div>
+                        ))}
+                        <button onClick={() => addArrayItem("music", "showcaseVideos", { title: "New Video", url: "", id: "", thumbnail: "", description: "" })} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Video</button>
+                      </div>
+                      <div className="border-t border-border pt-4 mt-4">
+                        <label className={labelClass}>Releases</label>
+                        {content.music.releases.map((release, i) => (
                         <div key={i} className="border border-border p-3 space-y-2">
                           <div className="flex justify-between items-center">
                             <span className="text-muted text-[10px] uppercase tracking-wider">Release {i + 1}</span>
@@ -346,6 +378,7 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                         </div>
                       ))}
                       <button onClick={() => addArrayItem("music", "releases", { title: "New Release", type: "SINGLE", year: "2024", cover: "", streams: "0", links: [{ label: "YouTube", url: "" }], tagColor: "#c8ff00" })} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Release</button>
+                      </div>
                     </>
                   )}
 
@@ -393,6 +426,33 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                         <input className={inputClass} value={content.video.thumbnail} onChange={(e) => updateField("video", "thumbnail", e.target.value)} />
                         {content.video.thumbnail && <img src={content.video.thumbnail} alt="Preview" className="mt-2 w-full h-32 object-cover border border-border" />}
                       </div>
+                    </>
+                  )}
+
+                  {/* ROOMS */}
+                  {section.key === "rooms" && (
+                    <>
+                      <div className="grid grid-cols-2 gap-3">
+                        <div>
+                          <label className={labelClass}>Heading</label>
+                          <input className={inputClass} value={content.rooms.heading} onChange={(e) => updateField("rooms", "heading", e.target.value)} />
+                        </div>
+                        <div>
+                          <label className={labelClass}>Highlight Word</label>
+                          <input className={inputClass} value={content.rooms.highlightWord} onChange={(e) => updateField("rooms", "highlightWord", e.target.value)} />
+                        </div>
+                      </div>
+                      {content.rooms.items.map((room, i) => (
+                        <div key={i} className="border border-border p-3 space-y-2 mb-2">
+                          <div className="flex justify-between items-center">
+                            <span className="text-muted text-[10px] uppercase tracking-wider">Room {i + 1}</span>
+                            <button onClick={() => removeArrayItem("rooms", "items", i)} className="text-accent hover:text-white"><Trash2 className="w-4 h-4" /></button>
+                          </div>
+                          <input className={inputClass} placeholder="Title" value={room.title} onChange={(e) => updateArrayItem("rooms", "items", i, "title", e.target.value)} />
+                          <textarea className={inputClass} rows={2} placeholder="Description" value={room.description} onChange={(e) => updateArrayItem("rooms", "items", i, "description", e.target.value)} />
+                        </div>
+                      ))}
+                      <button onClick={() => addArrayItem("rooms", "items", { title: "New Room", description: "" })} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Room</button>
                     </>
                   )}
 

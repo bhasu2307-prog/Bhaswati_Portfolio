@@ -2,6 +2,8 @@ export interface VideoItem {
   title: string;
   url: string;
   id: string;
+  thumbnail: string;
+  description: string;
 }
 
 export interface PhotoItem {
@@ -37,6 +39,11 @@ export interface StreamingPlatform {
   icon: string;
 }
 
+export interface RoomItem {
+  title: string;
+  description: string;
+}
+
 export interface SiteContent {
   hero: {
     firstName: string;
@@ -45,6 +52,8 @@ export interface SiteContent {
     description: string;
     ctaLabel: string;
     ctaUrl: string;
+    secondaryCtaLabel: string;
+    secondaryCtaUrl: string;
     backgroundImage: string;
   };
   about: {
@@ -60,6 +69,9 @@ export interface SiteContent {
   music: {
     heading: string;
     highlightWord: string;
+    showcaseHeading: string;
+    showcaseDescription: string;
+    showcaseVideos: VideoItem[];
     releases: ReleaseItem[];
   };
   photos: {
@@ -72,6 +84,11 @@ export interface SiteContent {
     subtitle: string;
     url: string;
     thumbnail: string;
+  };
+  rooms: {
+    heading: string;
+    highlightWord: string;
+    items: RoomItem[];
   };
   contact: {
     heading: string;
@@ -89,31 +106,40 @@ export interface SiteContent {
   };
 }
 
+function ytThumb(id: string): string {
+  return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+}
+
 export const defaultContent: SiteContent = {
   hero: {
     firstName: "Bhaswati",
-    lastName: "Sengupta",
+    lastName: "Sen Gupta",
     subtitle: "Singer / Live Performer / Playback Artist",
     description: "A Bollywood voice raised on riyaaz — bringing the songs that raised us to your stage, live, wherever home is now.",
-    ctaLabel: "Book Bhaswati",
+    ctaLabel: "Book Live Bollywood Music",
     ctaUrl: "mailto:bhaswatis.music@gmail.com",
-    backgroundImage: "https://images.pexels.com/photos/8547680/pexels-photo-8547680.jpeg?auto=compress&cs=tinysrgb&h=1200&w=800",
+    secondaryCtaLabel: "Watch Showreel",
+    secondaryCtaUrl: "https://youtu.be/_RQKF-RxzMk",
+    backgroundImage: "https://i.ytimg.com/vi/77AX44whQyY/maxresdefault.jpg",
   },
   about: {
-    heading: "The Artist",
-    highlightWord: "Artist",
+    heading: "Every song carries a little bit of home",
+    highlightWord: "home",
     paragraphs: [
+      "Every song I sing carries a little bit of home in it. Here is how a girl doing riyaaz before sunrise ended up on stages an ocean away — and why, when the lights come up, it still feels like I am singing for family.",
       "Before I understood the words, I knew the melodies. Ours was a house where the harmonium was never really put away — mornings meant riyaaz, evenings meant old film songs drifting from the radio. Music was not a lesson. It was the language we spoke.",
       "The moment I fell in love with the stage was not applause — it was silence. A room full of people going quiet, leaning in, feeling a lyric land the same instant I did. That hush is what I have chased ever since.",
-      "Trained under Sharanya Natrajan (AR Rahman alumna) and mentored by Koyel Tripathi in classical foundations, I now bring that voice to stages across the US, Canada and India — to weddings, galas and campus nights full of people far from where they grew up.",
+      "Then came the studios — playback work, original releases, the strange thrill of hearing my own voice come back through the speakers. It taught me discipline and range. But a record is a photograph. Live is the real thing, breathing.",
+      "Now I bring that voice to stages across the US, Canada and India — to weddings, galas and campus nights full of people far from where they grew up. When the first familiar notes hit, I watch a room remember home. That is the whole reason I do this.",
+      "I do not just want you to hear the song. For three minutes, I want the whole room to feel like it is back home.",
     ],
     image1: "https://images.pexels.com/photos/32491407/pexels-photo-32491407.jpeg?auto=compress&cs=tinysrgb&h=900&w=600",
-    image1Label: "Live / Mumbai",
+    image1Label: "Live / On Stage",
     image2: "https://images.pexels.com/photos/9418230/pexels-photo-9418230.jpeg?auto=compress&cs=tinysrgb&h=900&w=600",
-    image2Label: "Studio / Delhi",
+    image2Label: "Studio / Playback",
     facts: [
       { label: "Based", value: "Mumbai / Touring US & Canada" },
-      { label: "Genres", value: "Bollywood / Folk / Pop" },
+      { label: "Genres", value: "Bollywood / Folk / Pop / Semi-Classical" },
       { label: "Languages", value: "Hindi / Bengali / English / Tamil" },
       { label: "Training", value: "Sharanya Natrajan (AR Rahman alumna)" },
       { label: "Mentor", value: "Koyel Tripathi" },
@@ -121,44 +147,51 @@ export const defaultContent: SiteContent = {
     ],
   },
   music: {
-    heading: "Music & Releases",
-    highlightWord: "Releases",
+    heading: "Three songs, three moods",
+    highlightWord: "moods",
+    showcaseHeading: "Three songs, three moods.",
+    showcaseDescription: "This is the range I bring to a night — a devotional opener to settle the room, a full-floor mashup to lift it, and a romantic hit that has everyone singing the words back to me.",
+    showcaseVideos: [
+      { title: "Jhoom Jhoom Baba", url: "https://youtu.be/wL_gLi4KLtg", id: "wL_gLi4KLtg", thumbnail: ytThumb("wL_gLi4KLtg"), description: "A devotional opener to settle the room" },
+      { title: "Live Mashup", url: "https://youtu.be/77AX44whQyY", id: "77AX44whQyY", thumbnail: ytThumb("77AX44whQyY"), description: "A full-floor mashup to lift it" },
+      { title: "Chaleya", url: "https://youtu.be/0miwmaEUb8k", id: "0miwmaEUb8k", thumbnail: ytThumb("0miwmaEUb8k"), description: "A romantic hit that has everyone singing the words back" },
+    ],
     releases: [
       {
-        title: "Jhoom Jhoom Baba",
+        title: "Playback Release 1",
         type: "SINGLE",
         year: "2024",
-        cover: "https://images.pexels.com/photos/10168224/pexels-photo-10168224.jpeg?auto=compress&cs=tinysrgb&h=600&w=600",
-        streams: "2.1M",
+        cover: ytThumb("tB-SVGFH7Is"),
+        streams: "Released",
         links: [
-          { label: "YouTube", url: "https://youtu.be/wL_gLi4KLtg" },
+          { label: "YouTube", url: "https://youtu.be/tB-SVGFH7Is" },
           { label: "Spotify", url: "https://spotify.com" },
         ],
         tagColor: "#c8ff00",
       },
       {
-        title: "Chaleya (Cover)",
+        title: "Playback Release 2",
         type: "SINGLE",
         year: "2024",
-        cover: "https://images.pexels.com/photos/9418230/pexels-photo-9418230.jpeg?auto=compress&cs=tinysrgb&h=600&w=600",
-        streams: "1.8M",
+        cover: ytThumb("oEBC1Or8teQ"),
+        streams: "Released",
         links: [
-          { label: "YouTube", url: "https://youtu.be/0miwmaEUb8k" },
+          { label: "YouTube", url: "https://youtu.be/oEBC1Or8teQ" },
+          { label: "Spotify", url: "https://spotify.com" },
+        ],
+        tagColor: "#c8ff00",
+      },
+      {
+        title: "Original Composition",
+        type: "SINGLE",
+        year: "2023",
+        cover: ytThumb("iV5rNXgQySg"),
+        streams: "Beyond covers",
+        links: [
+          { label: "YouTube", url: "https://youtu.be/iV5rNXgQySg" },
           { label: "Spotify", url: "https://spotify.com" },
         ],
         tagColor: "#ff3cac",
-      },
-      {
-        title: "Mashup Live",
-        type: "EP",
-        year: "2023",
-        cover: "https://images.pexels.com/photos/5351021/pexels-photo-5351021.png?auto=compress&cs=tinysrgb&h=600&w=600",
-        streams: "3.5M",
-        links: [
-          { label: "YouTube", url: "https://youtu.be/77AX44whQyY" },
-          { label: "Spotify", url: "https://spotify.com" },
-        ],
-        tagColor: "#c8ff00",
       },
     ],
   },
@@ -175,15 +208,25 @@ export const defaultContent: SiteContent = {
     ],
   },
   video: {
-    title: "Jhoom Jhoom Baba — Live",
-    subtitle: "Highlight Reel / 2024",
-    url: "https://youtu.be/wL_gLi4KLtg",
-    thumbnail: "https://images.pexels.com/photos/30497160/pexels-photo-30497160.jpeg?auto=compress&cs=tinysrgb&h=800&w=1600",
+    title: "Hear it for yourself.",
+    subtitle: "Showreel / 60 seconds",
+    url: "https://youtu.be/_RQKF-RxzMk",
+    thumbnail: ytThumb("_RQKF-RxzMk"),
+  },
+  rooms: {
+    heading: "The rooms I love to fill",
+    highlightWord: "fill",
+    items: [
+      { title: "South Asian Weddings & Sangeet", description: "Full live-band sets for the baraat, sangeet and reception — authentic Hindi and Bollywood song lists for desi weddings across the US and Canada." },
+      { title: "Corporate & Diwali Galas", description: "Polished, brand-appropriate live entertainment for corporate galas, Diwali nights, cultural associations and award evenings." },
+      { title: "University & College Shows", description: "High-energy Bollywood concert sets for South Asian student associations and campus culture nights." },
+      { title: "Private & Club Shows", description: "Intimate live-band evenings and club nights — from soulful ghazals to a full Bollywood dance floor." },
+    ],
   },
   contact: {
-    heading: "Get In Touch",
-    highlightWord: "Touch",
-    blurb: "Tell me about your evening — the date, the city, the people who will be in the room. You'll hear back from me personally, not an autoresponder.",
+    heading: "Let's give your night a voice",
+    highlightWord: "voice",
+    blurb: "Tell me about your evening — the date, the city, the people who will be in the room. You'll hear back from me personally, not an autoresponder. This part I like to do myself.",
     bookingEmail: "bhaswatis.music@gmail.com",
     contacts: [
       { label: "Management", name: "Rohan Mehta", email: "rohan@bhaswatimusic.com" },
@@ -191,11 +234,11 @@ export const defaultContent: SiteContent = {
       { label: "Booking — International", name: "James Carter", email: "james@bhaswatimusic.com" },
       { label: "Press & PR", name: "Anita Desai", email: "anita@bhaswatimusic.com" },
       { label: "Sync Licensing", name: "Vikram Singh", email: "vikram@bhaswatimusic.com" },
-      { label: "General Inquiries", name: "Bhaswati Sengupta", email: "bhaswatis.music@gmail.com" },
+      { label: "General Inquiries", name: "Bhaswati Sen Gupta", email: "bhaswatis.music@gmail.com" },
     ],
   },
   footer: {
-    artistName: "Bhaswati Sengupta",
+    artistName: "Bhaswati Sen Gupta",
     subtitle: "Singer / Live Performer / Playback Artist",
     socialHandle: "@itsmebsg",
     socials: [

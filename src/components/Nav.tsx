@@ -37,6 +37,7 @@ export default function Nav({ content }: { content: SiteContent }) {
             { label: "About", href: "#about" },
             { label: "Music", href: "#music" },
             { label: "Photos", href: "#photos" },
+            { label: "Rooms", href: "#rooms" },
             { label: "Contact", href: "#contact" },
           ].map((link) => (
             <a
@@ -50,11 +51,12 @@ export default function Nav({ content }: { content: SiteContent }) {
         </div>
 
         {/* Mobile nav — show condensed links */}
-        <div className="flex md:hidden items-center gap-4">
+        <div className="flex md:hidden items-center gap-3">
           {[
             { label: "About", href: "#about" },
             { label: "Music", href: "#music" },
             { label: "Photos", href: "#photos" },
+            { label: "Rooms", href: "#rooms" },
             { label: "Contact", href: "#contact" },
           ].map((link) => (
             <a

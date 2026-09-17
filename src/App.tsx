@@ -6,6 +6,8 @@ import About from "@/components/About";
 import Music from "@/components/Music";
 import Photos from "@/components/Photos";
 import VideoStrip from "@/components/VideoStrip";
+import Rooms from "@/components/Rooms";
+import Rooms from "@/components/Rooms";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import StickyBookingBar from "@/components/StickyBookingBar";
@@ -43,7 +45,9 @@ function App() {
         <About content={content} />
         <Music content={content} />
         <Photos content={content} />
+        <Rooms content={content} />
         <VideoStrip content={content} />
+        <Rooms content={content} />
         <Contact content={content} />
       </main>
       <Footer content={content} />

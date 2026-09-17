@@ -4,7 +4,6 @@ import type { SiteContent } from "@/data/epkData";
 export default function Contact({ content }: { content: SiteContent }) {
   const { contact } = content;
 
-  // Split heading to highlight one word
   const words = contact.heading.split(" ");
   const highlightIdx = words.findIndex((w) =>
     w.toLowerCase().includes(contact.highlightWord.toLowerCase())
@@ -15,14 +14,14 @@ export default function Contact({ content }: { content: SiteContent }) {
       <div className="max-w-7xl mx-auto px-6 py-24 md:py-32">
         {/* Section kicker */}
         <div className="section-kicker">
-          <span className="num">004</span>
+          <span className="num">005</span>
           <span className="rule" />
           <span className="label">Contact</span>
         </div>
 
         {/* Grid: headline left, cards right */}
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-8 md:gap-16">
-          {/* Left — headline + blurb */}
+          {/* Left — headline + blurb + SEO CTA */}
           <div>
             <h2
               className="font-display font-bold uppercase leading-[0.85] tracking-tight text-white mb-6"
@@ -38,11 +37,11 @@ export default function Contact({ content }: { content: SiteContent }) {
               {contact.blurb}
             </p>
             <a
-              href={`mailto:${contact.bookingEmail}`}
+              href={`mailto:${contact.bookingEmail}?subject=Booking%20Inquiry%20—%20Live%20Bollywood%20Music`}
               className="inline-flex items-center gap-2 bg-primary text-primary-fg font-display font-bold uppercase text-sm px-6 py-3.5 tracking-wide transition-colors hover:bg-white"
             >
               <Mail className="w-4 h-4" />
-              Book Now
+              Book Live Bollywood Music
             </a>
           </div>
 
