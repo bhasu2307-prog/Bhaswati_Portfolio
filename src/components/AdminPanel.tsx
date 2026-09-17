@@ -285,18 +285,6 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                         ))}
                         <button onClick={() => updateField("about", "paragraphs", [...content.about.paragraphs, "New paragraph"])} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Paragraph</button>
                       </div>
-                      {/* Facts */}
-                      <div>
-                        <label className={labelClass}>Facts</label>
-                        {content.about.facts.map((fact, i) => (
-                          <div key={i} className="flex gap-2 mb-2">
-                            <input className={inputClass} placeholder="Label" value={fact.label} onChange={(e) => updateArrayItem("about", "facts", i, "label", e.target.value)} />
-                            <input className={inputClass} placeholder="Value" value={fact.value} onChange={(e) => updateArrayItem("about", "facts", i, "value", e.target.value)} />
-                            <button onClick={() => removeArrayItem("about", "facts", i)} className="shrink-0 text-accent hover:text-white p-2"><Trash2 className="w-4 h-4" /></button>
-                          </div>
-                        ))}
-                        <button onClick={() => addArrayItem("about", "facts", { label: "New Label", value: "New Value" })} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Fact</button>
-                      </div>
                     </>
                   )}
 
@@ -415,25 +403,13 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                       </div>
                       <div>
                         <label className={labelClass}>Booking Email</label>
-                        <input className={inputClass} value={contact_email(content)} onChange={(e) => updateField("contact", "bookingEmail", e.target.value)} />
+                        <input className={inputClass} value={content.contact.bookingEmail} onChange={(e) => updateField("contact", "bookingEmail", e.target.value)} />
                       </div>
                       <div>
                         <label className={labelClass}>Instagram DM URL</label>
                         <input className={inputClass} value={content.contact.instagramDmUrl} onChange={(e) => updateField("contact", "instagramDmUrl", e.target.value)} />
                         <p className="text-muted text-[10px] mt-1">Use format: https://ig.me/m/YOUR_USERNAME</p>
                       </div>
-                      {content.contact.contacts.map((c, i) => (
-                        <div key={i} className="border border-border p-3 space-y-2">
-                          <div className="flex justify-between items-center">
-                            <span className="text-muted text-[10px] uppercase tracking-wider">Contact {i + 1}</span>
-                            <button onClick={() => removeArrayItem("contact", "contacts", i)} className="text-accent hover:text-white"><Trash2 className="w-4 h-4" /></button>
-                          </div>
-                          <input className={inputClass} placeholder="Label" value={c.label} onChange={(e) => updateArrayItem("contact", "contacts", i, "label", e.target.value)} />
-                          <input className={inputClass} placeholder="Name" value={c.name} onChange={(e) => updateArrayItem("contact", "contacts", i, "name", e.target.value)} />
-                          <input className={inputClass} placeholder="Email" value={c.email} onChange={(e) => updateArrayItem("contact", "contacts", i, "email", e.target.value)} />
-                        </div>
-                      ))}
-                      <button onClick={() => addArrayItem("contact", "contacts", { label: "New Contact", name: "", email: "" })} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Contact</button>
                     </>
                   )}
 
@@ -519,6 +495,3 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
   );
 }
 
-function contact_email(content: SiteContent): string {
-  return content.contact.bookingEmail;
-}

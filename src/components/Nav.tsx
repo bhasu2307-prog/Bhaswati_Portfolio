@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import { Instagram, Facebook, Youtube, Headphones, Music2, Linkedin } from "lucide-react";
+import { Instagram, Facebook, Youtube, Headphones, Music2, Linkedin, Menu, X } from "lucide-react";
 import type { SiteContent } from "@/data/epkData";
 
 export default function Nav({ content }: { content: SiteContent }) {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 48);
@@ -38,7 +39,8 @@ export default function Nav({ content }: { content: SiteContent }) {
           : "bg-transparent border-b border-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+        {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <a
@@ -51,18 +53,16 @@ export default function Nav({ content }: { content: SiteContent }) {
           ))}
         </div>
 
-        <div className="flex md:hidden items-center gap-3">
-          {navLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-secondary text-[11px] font-light hover:text-primary transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
+        {/* Mobile hamburger */}
+        <button
+          className="md:hidden text-secondary hover:text-primary transition-colors"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Menu"
+        >
+          {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
 
+        {/* Socials */}
         <div className="flex items-center gap-2">
           {socials.map((social, i) => (
             <a
@@ -78,6 +78,24 @@ export default function Nav({ content }: { content: SiteContent }) {
           ))}
         </div>
       </div>
+
+      {/* Mobile dropdown menu */}
+      {menuOpen && (
+        <div className="md:hidden bg-bg/98 backdrop-blur-md border-b border-border">
+          <div className="px-4 py-4 flex flex-col gap-3">
+            {navLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="text-secondary text-sm font-light hover:text-primary transition-colors py-2"
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 }

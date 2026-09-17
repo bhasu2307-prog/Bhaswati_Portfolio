@@ -1,13 +1,22 @@
-import { Play } from "lucide-react";
+import { useState } from "react";
+import { Play, X } from "lucide-react";
 import type { SiteContent } from "@/data/epkData";
+
+function getYouTubeId(url: string): string {
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]+)/);
+  return match ? match[1] : "";
+}
 
 export default function About({ content }: { content: SiteContent }) {
   const { about } = content;
+  const [playing, setPlaying] = useState(false);
 
   const words = about.heading.split(" ");
   const highlightIdx = words.findIndex((w) =>
     w.toLowerCase().includes(about.highlightWord.toLowerCase())
   );
+
+  const videoId = getYouTubeId(about.showreelUrl);
 
   return (
     <section id="about" className="relative z-10 bg-bg border-b border-border">
@@ -24,29 +33,42 @@ export default function About({ content }: { content: SiteContent }) {
           ))}
         </h2>
 
-        {/* Showreel left, writeup right */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mb-12">
-          {/* Left — Showreel video */}
-          <div>
-            <a
-              href={about.showreelUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group block relative w-full overflow-hidden border border-border"
-            >
-              <div className="relative aspect-video overflow-hidden">
-                <img
-                  src={about.showreelThumbnail}
-                  alt={about.showreelTitle}
-                  className="w-full h-full object-cover img-grayscale"
-                />
-                <div className="absolute inset-0 bg-bg/40 group-hover:bg-bg/20 transition-colors duration-500" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-16 h-16 border-2 border-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                    <Play className="w-6 h-6 text-primary fill-current ml-1" />
-                  </div>
+        {/* Showreel left (9:16 vertical), writeup right — equal height */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-stretch">
+          {/* Left — Showreel video (9:16 portrait, plays in-page) */}
+          <div className="flex flex-col">
+            <div className="group relative w-full overflow-hidden border border-border flex-1 flex flex-col">
+              {playing ? (
+                <div className="relative aspect-[9/16] bg-black">
+                  <iframe
+                    className="w-full h-full"
+                    src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+                    title={about.showreelTitle}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  />
                 </div>
-              </div>
+              ) : (
+                <button
+                  onClick={() => setPlaying(true)}
+                  className="group block relative w-full overflow-hidden flex-1 cursor-pointer"
+                  aria-label="Play showreel"
+                >
+                  <div className="relative aspect-[9/16] overflow-hidden">
+                    <img
+                      src={about.showreelThumbnail}
+                      alt={about.showreelTitle}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-bg/30 group-hover:bg-bg/10 transition-colors duration-500" />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <div className="w-16 h-16 border-2 border-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-110 rounded-full">
+                        <Play className="w-6 h-6 text-primary fill-current ml-1" />
+                      </div>
+                    </div>
+                  </div>
+                </button>
+              )}
               <div className="border-t border-border p-4 bg-card">
                 <h3 className="font-display font-bold text-white text-sm uppercase leading-tight">
                   {about.showreelTitle}
@@ -55,31 +77,19 @@ export default function About({ content }: { content: SiteContent }) {
                   {about.showreelDescription}
                 </p>
               </div>
-            </a>
-          </div>
-
-          {/* Right — Writeup */}
-          <div className="space-y-5">
-            {about.paragraphs.map((p, i) => (
-              <p key={i} className="text-secondary text-sm md:text-base font-light leading-relaxed">
-                {p}
-              </p>
-            ))}
-          </div>
-        </div>
-
-        {/* Fact grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-border border border-border">
-          {about.facts.map((fact, i) => (
-            <div key={i} className="bg-bg px-4 py-4">
-              <div className="text-muted text-[9px] uppercase tracking-[0.2em] mb-1.5">
-                {fact.label}
-              </div>
-              <div className="text-white text-xs font-light">
-                {fact.value}
-              </div>
             </div>
-          ))}
+          </div>
+
+          {/* Right — Writeup (aligned to match showreel height) */}
+          <div className="flex flex-col justify-center">
+            <div className="space-y-5">
+              {about.paragraphs.map((p, i) => (
+                <p key={i} className="text-secondary text-sm md:text-base font-light leading-relaxed">
+                  {p}
+                </p>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

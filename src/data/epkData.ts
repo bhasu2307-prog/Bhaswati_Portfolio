@@ -55,7 +55,6 @@ export interface SiteContent {
     showreelUrl: string;
     showreelThumbnail: string;
     showreelDescription: string;
-    facts: { label: string; value: string }[];
   };
   music: {
     heading: string;
@@ -87,10 +86,22 @@ export interface SiteContent {
   };
 }
 
+export interface RoomItem {
+  title: string;
+  description: string;
+}
+
 export interface TechRiderItem {
   category: string;
   items: string[];
 }
+
+export const roomsData: RoomItem[] = [
+  { title: "South Asian Weddings & Sangeet", description: "Full live-band sets for the baraat, sangeet and reception — authentic Hindi and Bollywood song lists for desi weddings across the US and Canada." },
+  { title: "Corporate & Diwali Galas", description: "Polished, brand-appropriate live entertainment for corporate galas, Diwali nights, cultural associations and award evenings." },
+  { title: "University & College Shows", description: "High-energy Bollywood concert sets for South Asian student associations and campus culture nights." },
+  { title: "Private & Club Shows", description: "Intimate live-band evenings and club nights — from soulful ghazals to a full Bollywood dance floor." },
+];
 
 export const techRider: TechRiderItem[] = [
   {
@@ -165,14 +176,6 @@ export const defaultContent: SiteContent = {
     showreelUrl: "https://youtu.be/_RQKF-RxzMk",
     showreelThumbnail: ytThumb("_RQKF-RxzMk"),
     showreelDescription: "Words can only carry a voice so far. Sixty seconds is all it takes to feel the room — the energy, the range, and that hush right before the chorus lands.",
-    facts: [
-      { label: "Based", value: "Mumbai / Touring US & Canada" },
-      { label: "Genres", value: "Bollywood / Folk / Pop / Semi-Classical" },
-      { label: "Languages", value: "Hindi / Bengali / English / Tamil" },
-      { label: "Training", value: "Sharanya Natrajan (AR Rahman alumna)" },
-      { label: "Mentor", value: "Koyel Tripathi" },
-      { label: "Active Since", value: "2019" },
-    ],
   },
   music: {
     heading: "Three songs, three moods",
@@ -241,14 +244,7 @@ export const defaultContent: SiteContent = {
     blurb: "Tell me about your evening — the date, the city, the people who will be in the room. You'll hear back from me personally, not an autoresponder. This part I like to do myself.",
     bookingEmail: "bhaswatis.music@gmail.com",
     instagramDmUrl: "https://ig.me/m/itsmebsg",
-    contacts: [
-      { label: "Management", name: "Rohan Mehta", email: "rohan@bhaswatimusic.com" },
-      { label: "Booking — India", name: "Priya Sharma", email: "priya@bhaswatimusic.com" },
-      { label: "Booking — International", name: "James Carter", email: "james@bhaswatimusic.com" },
-      { label: "Press & PR", name: "Anita Desai", email: "anita@bhaswatimusic.com" },
-      { label: "Sync Licensing", name: "Vikram Singh", email: "vikram@bhaswatimusic.com" },
-      { label: "General Inquiries", name: "Bhaswati Sen Gupta", email: "bhaswatis.music@gmail.com" },
-    ],
+    contacts: [],
   },
   footer: {
     artistName: "Bhaswati Sen Gupta",

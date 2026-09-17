@@ -1,28 +1,50 @@
+import { useState } from "react";
 import { Play } from "lucide-react";
 import type { SiteContent, ReleaseItem, VideoItem } from "@/data/epkData";
 
+function getYouTubeId(url: string): string {
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([\w-]+)/);
+  return match ? match[1] : "";
+}
+
 function ShowcaseVideo({ video }: { video: VideoItem }) {
+  const [playing, setPlaying] = useState(false);
+  const videoId = getYouTubeId(video.url);
+
   return (
-    <a
-      href={video.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="release-card group border border-border bg-card overflow-hidden block"
-    >
-      <div className="relative aspect-video overflow-hidden">
-        <img
-          src={video.thumbnail}
-          alt={video.title}
-          loading="lazy"
-          className="w-full h-full object-cover img-grayscale"
-        />
-        <div className="absolute inset-0 bg-bg/30 group-hover:bg-bg/10 transition-colors duration-500" />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="w-12 h-12 border-2 border-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-            <Play className="w-5 h-5 text-primary fill-current ml-0.5" />
-          </div>
+    <div className="release-card group border border-border bg-card overflow-hidden">
+      {playing ? (
+        <div className="relative aspect-video bg-black">
+          <iframe
+            className="w-full h-full"
+            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`}
+            title={video.title}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
         </div>
-      </div>
+      ) : (
+        <button
+          onClick={() => setPlaying(true)}
+          className="group block relative w-full overflow-hidden cursor-pointer"
+          aria-label={`Play ${video.title}`}
+        >
+          <div className="relative aspect-video overflow-hidden">
+            <img
+              src={video.thumbnail}
+              alt={video.title}
+              loading="lazy"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-bg/20 group-hover:bg-bg/5 transition-colors duration-500" />
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="w-12 h-12 border-2 border-primary flex items-center justify-center transition-transform duration-300 group-hover:scale-110 rounded-full">
+                <Play className="w-5 h-5 text-primary fill-current ml-0.5" />
+              </div>
+            </div>
+          </div>
+        </button>
+      )}
       <div className="p-4 border-t border-border">
         <h3 className="font-display font-bold text-white text-sm uppercase leading-tight">
           {video.title}
@@ -31,7 +53,7 @@ function ShowcaseVideo({ video }: { video: VideoItem }) {
           {video.description}
         </p>
       </div>
-    </a>
+    </div>
   );
 }
 
@@ -43,7 +65,7 @@ function ReleaseCard({ release }: { release: ReleaseItem }) {
           src={release.cover}
           alt={release.title}
           loading="lazy"
-          className="w-full h-full object-cover img-grayscale"
+          className="w-full h-full object-cover"
         />
         <div
           className="absolute top-0 left-0 font-display font-bold uppercase text-[10px] tracking-wider px-3 py-1.5 text-primary-fg"
@@ -106,11 +128,9 @@ export default function Music({ content }: { content: SiteContent }) {
         </p>
 
         {/* Video showcase grid — three songs */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-px bg-border mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-px md:bg-border mb-20">
           {music.showcaseVideos.map((video, i) => (
-            <div key={i} className="bg-[#0d0d0d]">
-              <ShowcaseVideo video={video} />
-            </div>
+            <ShowcaseVideo key={i} video={video} />
           ))}
         </div>
 
@@ -126,11 +146,9 @@ export default function Music({ content }: { content: SiteContent }) {
         </p>
 
         {/* Release grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-px bg-border">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-px md:bg-border">
           {music.releases.map((release, i) => (
-            <div key={i} className="bg-[#0d0d0d]">
-              <ReleaseCard release={release} />
-            </div>
+            <ReleaseCard key={i} release={release} />
           ))}
         </div>
       </div>

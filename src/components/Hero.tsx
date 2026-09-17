@@ -1,5 +1,7 @@
-import { Play, Mail } from "lucide-react";
+import { Instagram, Play } from "lucide-react";
 import type { SiteContent } from "@/data/epkData";
+
+const INSTAGRAM_DM_URL = "https://ig.me/m/itsmebsg";
 
 export default function Hero({ content }: { content: SiteContent }) {
   const { hero } = content;
@@ -14,19 +16,16 @@ export default function Hero({ content }: { content: SiteContent }) {
           alt={heading}
           className="w-full h-full object-cover"
         />
-        {/* Dual gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-bg/60 via-bg/40 to-bg" />
         <div className="absolute inset-0 bg-gradient-to-r from-bg/70 via-transparent to-transparent" />
       </div>
 
       {/* Content */}
       <div className="relative z-10 min-h-screen flex flex-col justify-center max-w-7xl mx-auto px-6 pt-20 pb-16">
-        {/* Subtitle */}
         <p className="animate-clip-reveal text-primary font-display font-medium text-xs uppercase tracking-[0.3em] mb-6">
           {hero.subtitle}
         </p>
 
-        {/* Name — two-line clip reveal */}
         <h1 className="font-display font-bold uppercase leading-[0.85] tracking-tight text-white">
           <span
             className="animate-clip-reveal-delay-1 block"
@@ -42,19 +41,20 @@ export default function Hero({ content }: { content: SiteContent }) {
           </span>
         </h1>
 
-        {/* Subhead */}
         <p className="animate-fade-up-delay text-secondary text-base font-light mt-6 max-w-md leading-relaxed">
           {hero.description}
         </p>
 
-        {/* CTAs — not editable via CMS, hardcoded for SEO */}
+        {/* CTAs — Book Now = Instagram DM (primary), Watch Showreel (secondary) */}
         <div className="animate-fade-up-delay flex flex-wrap items-center gap-4 mt-8">
           <a
-            href="mailto:bhaswatis.music@gmail.com?subject=Booking%20Inquiry%20—%20Live%20Bollywood%20Music"
+            href={INSTAGRAM_DM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 bg-primary text-primary-fg font-display font-bold uppercase text-sm px-6 py-3.5 tracking-wide transition-colors hover:bg-white"
           >
-            <Mail className="w-4 h-4" />
-            Book Live Bollywood Music
+            <Instagram className="w-4 h-4" />
+            Book Now
           </a>
           <a
             href="#about"

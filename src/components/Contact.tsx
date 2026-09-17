@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Instagram, Send, Check } from "lucide-react";
+import { Mail, Instagram, Check } from "lucide-react";
 import type { SiteContent } from "@/data/epkData";
 
 export default function Contact({ content }: { content: SiteContent }) {
@@ -19,7 +19,7 @@ export default function Contact({ content }: { content: SiteContent }) {
     w.toLowerCase().includes(contact.highlightWord.toLowerCase())
   );
 
-  function handleSubmit(e: React.FormEvent) {
+  function handleSendMail(e: React.FormEvent) {
     e.preventDefault();
     const subject = encodeURIComponent(`Booking Inquiry — ${formState.eventType || "Live Bollywood Music"} — ${formState.date || "TBD"}`);
     const body = encodeURIComponent(
@@ -38,7 +38,7 @@ export default function Contact({ content }: { content: SiteContent }) {
         {/* Heading */}
         <h2
           className="font-display font-bold uppercase leading-[0.85] tracking-tight text-white mb-6"
-          style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)" }}
+          style={{ fontSize: "clamp(2.5rem, 9vw, 7.5rem)" }}
         >
           {words.map((word, i) => (
             <span key={i} className={i === highlightIdx ? "text-primary" : ""}>
@@ -50,129 +50,96 @@ export default function Contact({ content }: { content: SiteContent }) {
           {contact.blurb}
         </p>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8 md:gap-16">
-          {/* Left — Booking form */}
-          <div>
-            <h3 className="font-display font-bold text-white text-lg uppercase mb-6">
-              Booking <span className="text-primary">Sheet</span>
-            </h3>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">Your Name</label>
-                  <input
-                    required
-                    className={inputClass}
-                    value={formState.name}
-                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
-                    placeholder="Full name"
-                  />
-                </div>
-                <div>
-                  <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">Email</label>
-                  <input
-                    required
-                    type="email"
-                    className={inputClass}
-                    value={formState.email}
-                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
-                    placeholder="you@email.com"
-                  />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">Event Date</label>
-                  <input
-                    className={inputClass}
-                    value={formState.date}
-                    onChange={(e) => setFormState({ ...formState, date: e.target.value })}
-                    placeholder="e.g. 15 Dec 2026"
-                  />
-                </div>
-                <div>
-                  <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">City</label>
-                  <input
-                    className={inputClass}
-                    value={formState.city}
-                    onChange={(e) => setFormState({ ...formState, city: e.target.value })}
-                    placeholder="e.g. New York"
-                  />
-                </div>
+        {/* Booking form — full width */}
+        <div className="max-w-2xl">
+          <h3 className="font-display font-bold text-white text-lg uppercase mb-6">
+            Booking <span className="text-primary">Sheet</span>
+          </h3>
+          <form onSubmit={handleSendMail} className="space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">Your Name</label>
+                <input
+                  required
+                  className={inputClass}
+                  value={formState.name}
+                  onChange={(e) => setFormState({ ...formState, name: e.target.value })}
+                  placeholder="Full name"
+                />
               </div>
               <div>
-                <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">Event Type</label>
+                <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">Email</label>
+                <input
+                  required
+                  type="email"
+                  className={inputClass}
+                  value={formState.email}
+                  onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                  placeholder="you@email.com"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">Event Date</label>
                 <input
                   className={inputClass}
-                  value={formState.eventType}
-                  onChange={(e) => setFormState({ ...formState, eventType: e.target.value })}
-                  placeholder="e.g. Wedding, Corporate Gala, Campus Show"
+                  value={formState.date}
+                  onChange={(e) => setFormState({ ...formState, date: e.target.value })}
+                  placeholder="e.g. 15 Dec 2026"
                 />
               </div>
               <div>
-                <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">Tell me about your evening</label>
-                <textarea
-                  required
-                  rows={4}
+                <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">City</label>
+                <input
                   className={inputClass}
-                  value={formState.message}
-                  onChange={(e) => setFormState({ ...formState, message: e.target.value })}
-                  placeholder="The date, the city, the people who will be in the room..."
+                  value={formState.city}
+                  onChange={(e) => setFormState({ ...formState, city: e.target.value })}
+                  placeholder="e.g. New York"
                 />
               </div>
-              <button
-                type="submit"
+            </div>
+            <div>
+              <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">Event Type</label>
+              <input
+                className={inputClass}
+                value={formState.eventType}
+                onChange={(e) => setFormState({ ...formState, eventType: e.target.value })}
+                placeholder="e.g. Wedding, Corporate Gala, Campus Show"
+              />
+            </div>
+            <div>
+              <label className="text-muted text-[10px] uppercase tracking-[0.2em] mb-1.5 block">Tell me about your evening</label>
+              <textarea
+                required
+                rows={4}
+                className={inputClass}
+                value={formState.message}
+                onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                placeholder="The date, the city, the people who will be in the room..."
+              />
+            </div>
+            {/* Two buttons side by side */}
+            <div className="flex flex-wrap items-center gap-3">
+              {/* Book Now — Instagram DM */}
+              <a
+                href={contact.instagramDmUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 bg-primary text-primary-fg font-display font-bold uppercase text-sm px-6 py-3.5 tracking-wide transition-colors hover:bg-white"
               >
-                {sent ? <><Check className="w-4 h-4" /> Opening your email...</> : <><Mail className="w-4 h-4" /> Book Now</>}
+                <Instagram className="w-4 h-4" />
+                Book Now
+              </a>
+              {/* Send Mail — opens email client */}
+              <button
+                type="submit"
+                className="inline-flex items-center gap-2 border border-border text-white font-display font-bold uppercase text-sm px-6 py-3.5 tracking-wide transition-all hover:border-primary hover:text-primary"
+              >
+                {sent ? <><Check className="w-4 h-4" /> Opening...</> : <><Mail className="w-4 h-4" /> Send Mail</>}
               </button>
-            </form>
-          </div>
-
-          {/* Right — Reach Out + contact cards */}
-          <div>
-            <h3 className="font-display font-bold text-white text-lg uppercase mb-6">
-              Other <span className="text-primary">Ways</span>
-            </h3>
-
-            {/* Reach Out — Instagram DM */}
-            <a
-              href={contact.instagramDmUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-4 border border-border p-5 mb-6 group transition-all hover:border-primary hover:bg-card"
-            >
-              <div className="w-12 h-12 border border-border flex items-center justify-center group-hover:border-primary transition-colors shrink-0">
-                <Instagram className="w-5 h-5 text-secondary group-hover:text-primary transition-colors" />
-              </div>
-              <div>
-                <div className="font-display font-bold text-white text-sm uppercase">Reach Out</div>
-                <div className="text-muted text-[10px] uppercase tracking-wider mt-0.5">Direct message on Instagram</div>
-              </div>
-              <Send className="w-4 h-4 text-muted group-hover:text-primary transition-colors ml-auto" />
-            </a>
-
-            {/* Contact cards */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-border border border-border">
-              {contact.contacts.map((c, i) => (
-                <a
-                  key={i}
-                  href={`mailto:${c.email}`}
-                  className="bg-bg p-4 group transition-colors hover:bg-card"
-                >
-                  <div className="text-primary text-[9px] uppercase tracking-[0.25em] mb-2">
-                    {c.label}
-                  </div>
-                  <div className="text-white text-xs font-light mb-1">
-                    {c.name}
-                  </div>
-                  <div className="text-secondary text-[10px] font-light break-all group-hover:text-primary transition-colors">
-                    {c.email}
-                  </div>
-                </a>
-              ))}
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </section>
