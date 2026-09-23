@@ -5,7 +5,6 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Music from "@/components/Music";
 import Photos from "@/components/Photos";
-import TechRider from "@/components/TechRider";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import StickyBookingBar from "@/components/StickyBookingBar";
@@ -43,7 +42,6 @@ function App() {
         <About content={content} />
         <Music content={content} />
         <Photos content={content} />
-        <TechRider />
         <Contact content={content} />
       </main>
       <Footer content={content} />

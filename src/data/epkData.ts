@@ -46,6 +46,8 @@ export interface SiteContent {
     subtitle: string;
     description: string;
     backgroundImage: string;
+    sliderImages: string[];
+    techRiderPdfUrl: string;
   };
   about: {
     heading: string;
@@ -160,6 +162,8 @@ export const defaultContent: SiteContent = {
     subtitle: "Singer / Live Performer / Playback Artist",
     description: "A Bollywood voice raised on riyaaz — bringing the songs that raised us to your stage, live, wherever home is now.",
     backgroundImage: "https://i.ytimg.com/vi/77AX44whQyY/maxresdefault.jpg",
+    sliderImages: [],
+    techRiderPdfUrl: "",
   },
   about: {
     heading: "Every song carries a little bit of home",

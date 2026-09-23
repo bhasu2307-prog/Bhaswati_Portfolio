@@ -3,6 +3,7 @@ import { X, Save, Lock, Check, ChevronDown, ChevronUp, Plus, Trash2 } from "luci
 import { supabase } from "@/lib/supabase";
 import { defaultContent, type SiteContent } from "@/data/epkData";
 import ImageUpload from "@/components/ImageUpload";
+import FileUpload from "@/components/FileUpload";
 
 const ADMIN_PASSWORD = "bhaswati2026";
 
@@ -223,13 +224,62 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                         <textarea className={inputClass} rows={3} value={content.hero.description} onChange={(e) => updateField("hero", "description", e.target.value)} />
                       </div>
                       <ImageUpload
-                        label="Background Image"
+                        label="Background Image (fallback)"
                         value={content.hero.backgroundImage}
                         onChange={(url) => updateField("hero", "backgroundImage", url)}
                         folder="hero"
                       />
+                      {/* Slider images */}
+                      <div className="border border-border p-3 space-y-3">
+                        <span className="text-muted text-[10px] uppercase tracking-wider">Hero Background Slider (4-5 images that scroll)</span>
+                        {content.hero.sliderImages.map((img, i) => (
+                          <div key={i} className="relative">
+                            <ImageUpload
+                              label={`Slide ${i + 1}`}
+                              value={img}
+                              onChange={(url) => {
+                                const arr = [...content.hero.sliderImages];
+                                arr[i] = url;
+                                updateField("hero", "sliderImages", arr);
+                              }}
+                              folder={`hero-slider/${i}`}
+                            />
+                            <button
+                              onClick={() => {
+                                const arr = [...content.hero.sliderImages];
+                                arr.splice(i, 1);
+                                updateField("hero", "sliderImages", arr);
+                              }}
+                              className="absolute -top-1 -right-1 w-5 h-5 bg-accent text-white flex items-center justify-center hover:bg-white hover:text-accent transition-colors z-10"
+                              aria-label="Remove slide"
+                            >
+                              <Trash2 className="w-3 h-3" />
+                            </button>
+                          </div>
+                        ))}
+                        <button
+                          onClick={() => updateField("hero", "sliderImages", [...content.hero.sliderImages, ""])}
+                          className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"
+                        >
+                          <Plus className="w-3 h-3" /> Add Slide
+                        </button>
+                        <p className="text-muted text-[10px]">If no slider images are added, the background image above is used.</p>
+                      </div>
+                      {/* Tech Rider PDF */}
+                      <div className="border border-border p-3 space-y-3">
+                        <span className="text-muted text-[10px] uppercase tracking-wider">Tech Details Brochure (PDF)</span>
+                        <FileUpload
+                          label="Upload PDF"
+                          value={content.hero.techRiderPdfUrl}
+                          onChange={(url) => updateField("hero", "techRiderPdfUrl", url)}
+                          folder="tech-rider"
+                          accept="application/pdf"
+                          maxSizeMB={25}
+                        />
+                        <p className="text-muted text-[10px]">When uploaded, a "Tech Details Brochure" download button appears on the hero section.</p>
+                      </div>
                       <p className="text-muted text-[10px] uppercase tracking-wider pt-2 border-t border-border">
-                        Buttons are not editable — they are hardcoded for SEO.
+                        Buttons are not editable — they are generated automatically.
                       </p>
                     </>
                   )}
@@ -498,11 +548,6 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
             </div>
           );
         })}
-
-        <div className="border border-border p-4 mt-4">
-          <p className="text-muted text-[10px] uppercase tracking-wider mb-1">Tech Rider</p>
-          <p className="text-secondary text-xs font-light">The Tech Rider section is not editable via the CMS. It contains fixed technical requirements for venues.</p>
-        </div>
 
         <p className="text-muted text-[10px] uppercase tracking-wider text-center pt-4">
           Changes save to the database and appear on the live site after refresh.
