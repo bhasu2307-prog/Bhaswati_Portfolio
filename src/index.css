@@ -222,3 +222,16 @@ body {
   outline: 2px solid #c8ff00;
   outline-offset: 2px;
 }
+
+/* Ken Burns continuous zoom for hero slider */
+@keyframes kenburns {
+  0% {
+    transform: scale(1) translateX(0%);
+  }
+  100% {
+    transform: scale(1.15) translateX(-2%);
+  }
+}
+.animate-kenburns {
+  animation: kenburns 3.5s ease-out forwards;
+}

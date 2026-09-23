@@ -8,7 +8,7 @@ export default function Hero({ content }: { content: SiteContent }) {
 
   const slides =
     hero.sliderImages && hero.sliderImages.length > 0
-      ? hero.sliderImages
+      ? hero.sliderImages.filter((s) => s.length > 0)
       : [hero.backgroundImage];
 
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -17,33 +17,37 @@ export default function Hero({ content }: { content: SiteContent }) {
     if (slides.length <= 1) return;
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
-    }, 4000);
+    }, 3500);
     return () => clearInterval(interval);
   }, [slides.length]);
 
   return (
     <section id="top" className="relative min-h-screen w-full overflow-hidden">
-      {/* Background slider */}
-      <div className="absolute inset-0">
+      {/* Background slider with Ken Burns continuous motion */}
+      <div className="absolute inset-0 overflow-hidden">
         {slides.map((img, i) => (
           <div
             key={i}
-            className="absolute inset-0 transition-opacity duration-1000 ease-in-out"
+            className="absolute inset-0 transition-opacity duration-700 ease-in-out"
             style={{ opacity: i === currentSlide ? 1 : 0 }}
           >
             <img
               src={img}
               alt={`${heading} ${i + 1}`}
-              className="w-full h-full object-cover"
+              className={`w-full h-full object-cover ${
+                i === currentSlide ? "animate-kenburns" : ""
+              }`}
+              style={{ transformOrigin: "center 40%" }}
             />
           </div>
         ))}
-        {/* Overlays */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-bg" />
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-transparent" />
+        {/* Cinematic overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/35 to-bg" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/20 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent" />
       </div>
 
-      {/* Slider dots */}
+      {/* Slider indicators */}
       {slides.length > 1 && (
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2">
           {slides.map((_, i) => (
@@ -61,7 +65,7 @@ export default function Hero({ content }: { content: SiteContent }) {
 
       {/* Content */}
       <div className="relative z-10 min-h-screen flex flex-col justify-center max-w-7xl mx-auto px-6 md:px-8 pt-24 pb-20">
-        {/* Subtitle — elegant tracking */}
+        {/* Subtitle */}
         <p
           className="animate-clip-reveal text-primary font-display font-medium uppercase mb-5 md:mb-7"
           style={{ fontSize: "clamp(0.625rem, 1.5vw, 0.875rem)", letterSpacing: "0.4em" }}
@@ -69,7 +73,7 @@ export default function Hero({ content }: { content: SiteContent }) {
           {hero.subtitle}
         </p>
 
-        {/* Name — large display */}
+        {/* Name */}
         <h1 className="font-display font-bold uppercase leading-[0.8] tracking-tight text-white">
           <span
             className="animate-clip-reveal-delay-1 block"
@@ -95,7 +99,7 @@ export default function Hero({ content }: { content: SiteContent }) {
 
         {/* CTAs */}
         <div className="animate-fade-up-delay flex flex-wrap items-center gap-3 md:gap-4 mt-8 md:mt-10">
-          {/* Book Now — Instagram DM */}
+          {/* Book Now */}
           <a
             href={content.contact.instagramDmUrl}
             target="_blank"
@@ -115,7 +119,7 @@ export default function Hero({ content }: { content: SiteContent }) {
             Watch Showreel
           </a>
 
-          {/* Tech Details Brochure — PDF download */}
+          {/* Tech Brochure — PDF download */}
           {hero.techRiderPdfUrl && (
             <a
               href={hero.techRiderPdfUrl}
@@ -124,7 +128,7 @@ export default function Hero({ content }: { content: SiteContent }) {
               className="group inline-flex items-center gap-2 border border-white/20 text-white/70 font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide transition-all duration-300 hover:border-white hover:text-white"
             >
               <Download className="w-4 h-4" />
-              Tech Details Brochure
+              Tech Brochure
             </a>
           )}
         </div>
