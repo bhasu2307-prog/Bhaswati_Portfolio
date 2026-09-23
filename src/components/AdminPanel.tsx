@@ -2,6 +2,7 @@ import { useState } from "react";
 import { X, Save, Lock, Check, ChevronDown, ChevronUp, Plus, Trash2 } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { defaultContent, type SiteContent } from "@/data/epkData";
+import ImageUpload from "@/components/ImageUpload";
 
 const ADMIN_PASSWORD = "bhaswati2026";
 
@@ -221,13 +222,12 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                         <label className={labelClass}>Description</label>
                         <textarea className={inputClass} rows={3} value={content.hero.description} onChange={(e) => updateField("hero", "description", e.target.value)} />
                       </div>
-                      <div>
-                        <label className={labelClass}>Background Image URL</label>
-                        <input className={inputClass} value={content.hero.backgroundImage} onChange={(e) => updateField("hero", "backgroundImage", e.target.value)} />
-                        {content.hero.backgroundImage && (
-                          <img src={content.hero.backgroundImage} alt="Preview" className="mt-2 w-full h-32 object-cover border border-border" />
-                        )}
-                      </div>
+                      <ImageUpload
+                        label="Background Image"
+                        value={content.hero.backgroundImage}
+                        onChange={(url) => updateField("hero", "backgroundImage", url)}
+                        folder="hero"
+                      />
                       <p className="text-muted text-[10px] uppercase tracking-wider pt-2 border-t border-border">
                         Buttons are not editable — they are hardcoded for SEO.
                       </p>
@@ -256,11 +256,13 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                           <label className={labelClass}>Showreel YouTube URL</label>
                           <input className={inputClass} value={content.about.showreelUrl} onChange={(e) => updateField("about", "showreelUrl", e.target.value)} />
                         </div>
-                        <div>
-                          <label className={labelClass}>Showreel Thumbnail URL</label>
-                          <input className={inputClass} value={content.about.showreelThumbnail} onChange={(e) => updateField("about", "showreelThumbnail", e.target.value)} />
-                          {content.about.showreelThumbnail && <img src={content.about.showreelThumbnail} alt="Preview" className="mt-2 w-full h-32 object-cover border border-border" />}
-                        </div>
+                        <ImageUpload
+                          label="Showreel Thumbnail"
+                          value={content.about.showreelThumbnail}
+                          onChange={(url) => updateField("about", "showreelThumbnail", url)}
+                          folder="showreel"
+                          aspectRatio="h-40"
+                        />
                         <div>
                           <label className={labelClass}>Showreel Description</label>
                           <textarea className={inputClass} rows={2} value={content.about.showreelDescription} onChange={(e) => updateField("about", "showreelDescription", e.target.value)} />
@@ -338,7 +340,12 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                               <input className={inputClass} placeholder="Year" value={release.year} onChange={(e) => updateArrayItem("music", "releases", i, "year", e.target.value)} />
                               <input className={inputClass} placeholder="Streams" value={release.streams} onChange={(e) => updateArrayItem("music", "releases", i, "streams", e.target.value)} />
                             </div>
-                            <input className={inputClass} placeholder="Cover Image URL" value={release.cover} onChange={(e) => updateArrayItem("music", "releases", i, "cover", e.target.value)} />
+                            <ImageUpload
+                              label="Cover Image"
+                              value={release.cover}
+                              onChange={(url) => updateArrayItem("music", "releases", i, "cover", url)}
+                              folder={`releases/${i}`}
+                            />
                             <div className="grid grid-cols-2 gap-2">
                               <input className={inputClass} placeholder="Link Label" value={release.links[0]?.label || ""} onChange={(e) => {
                                 const links = [...release.links];
@@ -374,10 +381,20 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                         </div>
                       </div>
                       {content.photos.photos.map((photo, i) => (
-                        <div key={i} className="flex gap-2 mb-2">
-                          <input className={inputClass} placeholder="Image URL" value={photo.src} onChange={(e) => updateArrayItem("photos", "photos", i, "src", e.target.value)} />
-                          <input className={inputClass} placeholder="Credit" value={photo.credit} onChange={(e) => updateArrayItem("photos", "photos", i, "credit", e.target.value)} />
-                          <button onClick={() => removeArrayItem("photos", "photos", i)} className="shrink-0 text-accent hover:text-white p-2"><Trash2 className="w-4 h-4" /></button>
+                        <div key={i} className="border border-border p-3 space-y-3 mb-2">
+                          <div className="flex justify-between items-center">
+                            <span className="text-muted text-[10px] uppercase tracking-wider">Photo {i + 1}</span>
+                            <button onClick={() => removeArrayItem("photos", "photos", i)} className="text-accent hover:text-white"><Trash2 className="w-4 h-4" /></button>
+                          </div>
+                          <ImageUpload
+                            value={photo.src}
+                            onChange={(url) => updateArrayItem("photos", "photos", i, "src", url)}
+                            folder={`photos/${i}`}
+                          />
+                          <div>
+                            <label className={labelClass}>Credit Label</label>
+                            <input className={inputClass} placeholder="e.g. Stage / Mumbai" value={photo.credit} onChange={(e) => updateArrayItem("photos", "photos", i, "credit", e.target.value)} />
+                          </div>
                         </div>
                       ))}
                       <button onClick={() => addArrayItem("photos", "photos", { src: "", credit: "New Photo" })} className="text-primary text-xs uppercase tracking-wider flex items-center gap-1 hover:text-white"><Plus className="w-3 h-3" /> Add Photo</button>
