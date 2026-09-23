@@ -22,18 +22,39 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
   const [authed, setAuthed] = useState(false);
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  const [lockedUntil, setLockedUntil] = useState<number | null>(null);
   const [content, setContent] = useState<SiteContent>(defaultContent);
   const [expanded, setExpanded] = useState<SectionKey | null>("hero");
   const [saving, setSaving] = useState<SectionKey | null>(null);
   const [savedSection, setSavedSection] = useState<SectionKey | null>(null);
 
+  const MAX_ATTEMPTS = 5;
+  const LOCK_DURATION = 30000;
+
   function handleLogin() {
+    if (lockedUntil && Date.now() < lockedUntil) {
+      const secs = Math.ceil((lockedUntil - Date.now()) / 1000);
+      setError(`Too many attempts. Try again in ${secs}s.`);
+      return;
+    }
+
     if (password === ADMIN_PASSWORD) {
       setAuthed(true);
       setError("");
+      setLoginAttempts(0);
+      setLockedUntil(null);
       loadContent();
     } else {
-      setError("Incorrect password");
+      const next = loginAttempts + 1;
+      setLoginAttempts(next);
+      if (next >= MAX_ATTEMPTS) {
+        setLockedUntil(Date.now() + LOCK_DURATION);
+        setError(`Too many failed attempts. Locked for 30 seconds.`);
+        setLoginAttempts(0);
+      } else {
+        setError(`Incorrect password. ${MAX_ATTEMPTS - next} attempts remaining.`);
+      }
     }
   }
 
@@ -150,9 +171,7 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
           >
             Unlock
           </button>
-          <p className="text-muted text-[10px] uppercase tracking-wider mt-4 text-center">
-            Default password: bhaswati2026
-          </p>
+
         </div>
       </div>
     );

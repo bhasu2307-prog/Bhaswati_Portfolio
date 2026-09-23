@@ -1,10 +1,13 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Instagram, Play, Download } from "lucide-react";
 import type { SiteContent } from "@/data/epkData";
+import MagneticButton from "@/components/MagneticButton";
 
 export default function Hero({ content }: { content: SiteContent }) {
   const { hero } = content;
   const heading = `${hero.firstName} ${hero.lastName}`;
+  const sectionRef = useRef<HTMLElement>(null);
+  const [scrollY, setScrollY] = useState(0);
 
   const slides =
     hero.sliderImages && hero.sliderImages.length > 0
@@ -21,10 +24,29 @@ export default function Hero({ content }: { content: SiteContent }) {
     return () => clearInterval(interval);
   }, [slides.length]);
 
+  useEffect(() => {
+    function onScroll() {
+      setScrollY(window.scrollY);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const parallaxOffset = scrollY * 0.4;
+  const contentParallax = scrollY * 0.15;
+  const fadeOpacity = Math.max(0, 1 - scrollY / 500);
+
   return (
-    <section id="top" className="relative min-h-screen w-full overflow-hidden">
-      {/* Background slider with Ken Burns continuous motion */}
-      <div className="absolute inset-0 overflow-hidden">
+    <section
+      id="top"
+      ref={sectionRef}
+      className="relative min-h-screen w-full overflow-hidden"
+    >
+      {/* Background slider with Ken Burns + parallax */}
+      <div
+        className="absolute inset-0 overflow-hidden"
+        style={{ transform: `translateY(${parallaxOffset}px)` }}
+      >
         {slides.map((img, i) => (
           <div
             key={i}
@@ -63,8 +85,14 @@ export default function Hero({ content }: { content: SiteContent }) {
         </div>
       )}
 
-      {/* Content */}
-      <div className="relative z-10 min-h-screen flex flex-col justify-center max-w-7xl mx-auto px-6 md:px-8 pt-24 pb-20">
+      {/* Content with parallax fade */}
+      <div
+        className="relative z-10 min-h-screen flex flex-col justify-center max-w-7xl mx-auto px-6 md:px-8 pt-24 pb-20"
+        style={{
+          transform: `translateY(${contentParallax}px)`,
+          opacity: fadeOpacity,
+        }}
+      >
         {/* Subtitle */}
         <p
           className="animate-clip-reveal text-primary font-display font-medium uppercase mb-5 md:mb-7"
@@ -83,7 +111,10 @@ export default function Hero({ content }: { content: SiteContent }) {
           </span>
           <span
             className="animate-clip-reveal-delay-2 block text-primary"
-            style={{ fontSize: "clamp(2.75rem, 11vw, 9rem)" }}
+            style={{
+              fontSize: "clamp(2.75rem, 11vw, 9rem)",
+              textShadow: "0 0 60px rgba(200,255,0,0.15)",
+            }}
           >
             {hero.lastName}
           </span>
@@ -97,40 +128,46 @@ export default function Hero({ content }: { content: SiteContent }) {
           {hero.description}
         </p>
 
-        {/* CTAs */}
+        {/* CTAs with magnetic effect */}
         <div className="animate-fade-up-delay flex flex-wrap items-center gap-3 md:gap-4 mt-8 md:mt-10">
-          {/* Book Now */}
-          <a
+          <MagneticButton
             href={content.contact.instagramDmUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 bg-primary text-primary-fg font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide transition-all duration-300 hover:bg-white hover:shadow-[0_0_30px_rgba(200,255,0,0.4)]"
+            className="bg-primary text-primary-fg font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide transition-all duration-300 hover:bg-white hover:shadow-[0_0_30px_rgba(200,255,0,0.4)]"
           >
             <Instagram className="w-4 h-4" />
             Book Now
-          </a>
+          </MagneticButton>
 
-          {/* Watch Showreel */}
-          <a
+          <MagneticButton
             href="#about"
-            className="group inline-flex items-center gap-2 border border-white/30 text-white font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide backdrop-blur-sm bg-white/5 transition-all duration-300 hover:border-primary hover:text-primary hover:bg-transparent"
+            className="border border-white/30 text-white font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide backdrop-blur-sm bg-white/5 transition-all duration-300 hover:border-primary hover:text-primary hover:bg-transparent"
           >
             <Play className="w-4 h-4 fill-current" />
             Watch Showreel
-          </a>
+          </MagneticButton>
 
-          {/* Tech Brochure — PDF download */}
           {hero.techRiderPdfUrl && (
-            <a
+            <MagneticButton
               href={hero.techRiderPdfUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 border border-white/20 text-white/70 font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide transition-all duration-300 hover:border-white hover:text-white"
+              className="border border-white/20 text-white/70 font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide transition-all duration-300 hover:border-white hover:text-white"
             >
               <Download className="w-4 h-4" />
               Tech Brochure
-            </a>
+            </MagneticButton>
           )}
+        </div>
+
+        {/* Scroll indicator */}
+        <div
+          className="absolute bottom-20 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
+          style={{ opacity: fadeOpacity }}
+        >
+          <span className="text-muted text-[9px] uppercase tracking-[0.3em]">Scroll</span>
+          <div className="w-px h-12 bg-gradient-to-b from-primary to-transparent animate-scroll-line" />
         </div>
       </div>
     </section>
