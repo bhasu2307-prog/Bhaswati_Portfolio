@@ -284,18 +284,17 @@ export default function AdminPanel({ onClose }: { onClose: () => void }) {
                         </button>
                         <p className="text-muted text-[10px]">If no slider images are added, the background image above is used.</p>
                       </div>
-                      {/* Tech Rider PDF */}
-                      <div className="border border-border p-3 space-y-3">
-                        <span className="text-muted text-[10px] uppercase tracking-wider">Tech Details Brochure (PDF)</span>
+                      {/* Tech Rider PDF — inline with CTA buttons context */}
+                      <div className="flex flex-col gap-2">
+                        <span className="text-muted text-[10px] uppercase tracking-wider">Tech Brochure PDF (download button on hero)</span>
                         <FileUpload
-                          label="Upload PDF"
                           value={content.hero.techRiderPdfUrl}
                           onChange={(url) => updateField("hero", "techRiderPdfUrl", url)}
                           folder="tech-rider"
                           accept="application/pdf"
                           maxSizeMB={25}
                         />
-                        <p className="text-muted text-[10px]">When uploaded, a "Tech Details Brochure" download button appears on the hero section.</p>
+                        <p className="text-muted text-[10px]">Upload a PDF — the "Tech Brochure" download button appears beside "Watch Showreel" on the hero page.</p>
                       </div>
                       <p className="text-muted text-[10px] uppercase tracking-wider pt-2 border-t border-border">
                         Buttons are not editable — they are generated automatically.

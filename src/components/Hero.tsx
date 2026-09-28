@@ -129,12 +129,12 @@ export default function Hero({ content }: { content: SiteContent }) {
         </p>
 
         {/* CTAs with magnetic effect */}
-        <div className="animate-fade-up-delay flex flex-wrap items-center gap-3 md:gap-4 mt-8 md:mt-10">
+        <div className="animate-fade-up-delay flex flex-nowrap items-center gap-2 md:gap-3 mt-8 md:mt-10 overflow-x-auto no-scrollbar">
           <MagneticButton
             href={content.contact.instagramDmUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-primary text-primary-fg font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide transition-all duration-300 hover:bg-white hover:shadow-[0_0_30px_rgba(200,255,0,0.4)]"
+            className="bg-primary text-primary-fg font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide transition-all duration-300 hover:bg-white hover:shadow-[0_0_30px_rgba(200,255,0,0.4)] whitespace-nowrap"
           >
             <Instagram className="w-4 h-4" />
             Book Now
@@ -142,22 +142,29 @@ export default function Hero({ content }: { content: SiteContent }) {
 
           <MagneticButton
             href="#about"
-            className="border border-white/30 text-white font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide backdrop-blur-sm bg-white/5 transition-all duration-300 hover:border-primary hover:text-primary hover:bg-transparent"
+            className="border border-white/30 text-white font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide backdrop-blur-sm bg-white/5 transition-all duration-300 hover:border-primary hover:text-primary hover:bg-transparent whitespace-nowrap"
           >
             <Play className="w-4 h-4 fill-current" />
             Watch Showreel
           </MagneticButton>
 
-          {hero.techRiderPdfUrl && (
+          {hero.techRiderPdfUrl ? (
             <MagneticButton
               href={hero.techRiderPdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="border border-white/20 text-white/70 font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide transition-all duration-300 hover:border-white hover:text-white"
+              download
+              className="border border-white/20 text-white/70 font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide transition-all duration-300 hover:border-white hover:text-white whitespace-nowrap"
             >
               <Download className="w-4 h-4" />
               Tech Brochure
             </MagneticButton>
+          ) : (
+            <span
+              className="inline-flex items-center gap-2 border border-white/10 text-white/30 font-display font-bold uppercase text-xs md:text-sm px-5 md:px-7 py-3.5 md:py-4 tracking-wide whitespace-nowrap cursor-not-allowed"
+              title="No PDF uploaded yet"
+            >
+              <Download className="w-4 h-4" />
+              Tech Brochure
+            </span>
           )}
         </div>
 
